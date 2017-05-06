@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import * as d3 from 'd3';
 import _ from 'lodash';
 
+import Bars from './visualizations/Bars';
+
 var surveyQs = {
   percents: {
     dataeng: 'Percent of your day focused on data engineering?',
@@ -14,6 +16,9 @@ var surveyQs = {
   vizmoreless: 'Do you want to spend more time or less time visualizing data in the future?',
   vizfrustrations: 'What is your biggest frustration with doing data visualization in your job?',
 };
+var width = 1000;
+var height = 1000;
+var barWidth = 700;
 
 class App extends Component {
 
@@ -30,27 +35,34 @@ class App extends Component {
   }
 
   render() {
+    var props = {
+      width, height, barWidth,
+    };
+
     // % of time ppl spend doing X, separated by if they want to do more/less viz
     // first divided by more/less, then by the percents
     var graph1Data = _.chain(this.state.survey)
       // make sure they have answer
-      .filter(d => d[surveyQs.vizmoreless] && d[surveyQs.vizmoreless] !== 'Same')
+      // .filter(d => d[surveyQs.vizfrustrations] && d[surveyQs.vizfrustrations] !== 'Same')
        // get either "less" or "more"
-      .groupBy(d => _.last(d[surveyQs.vizmoreless].split(' ')).toLowerCase())
+      // .groupBy(d => _.last(d[surveyQs.vizmoreless].split(' ')).toLowerCase())
+      .groupBy(d => !!d[surveyQs.vizfrustrations])
       .map((answers, type) => {
         return {
           type,
-          bars: _.map(surveyQs.percents, type => {
+          bars: _.map(surveyQs.percents, (question, type) => {
             return {
               type,
-              bars: _.filter(answers, a => a[type]),
+              bars: _.chain(answers).filter(a => a[question]).map(a => parseFloat(a[question])).value(),
             }
           }),
         }
       }).value();
 
+    console.log(graph1Data)
     return (
       <div className="App">
+        <Bars {...props} data={graph1Data} />
       </div>
     );
   }
