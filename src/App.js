@@ -6,11 +6,11 @@ import Bars from './visualizations/Bars';
 
 var surveyQs = {
   percents: {
-    dataeng: 'Percent of your day focused on data engineering?',
-    dataprep: 'Percent of your day focused on data prep work?',
-    datasci: 'Percent of your day focused on data science?',
+    // dataeng: 'Percent of your day focused on data engineering?',
+    // dataprep: 'Percent of your day focused on data prep work?',
+    // datasci: 'Percent of your day focused on data science?',
     design: 'Percent of your day focused on design?',
-    dataviz: 'Percent of your day focused on creating/implementing/productizing data visualizations?',
+    // dataviz: 'Percent of your day focused on creating/implementing/productizing data visualizations?',
   },
   employment: "What's your employment status",
   vizmoreless: 'Do you want to spend more time or less time visualizing data in the future?',
@@ -42,24 +42,28 @@ class App extends Component {
     // % of time ppl spend doing X, separated by if they want to do more/less viz
     // first divided by more/less, then by the percents
     var graph1Data = _.chain(this.state.survey)
-      // make sure they have answer
+      // // make sure they have answer
       // .filter(d => d[surveyQs.vizfrustrations] && d[surveyQs.vizfrustrations] !== 'Same')
-       // get either "less" or "more"
+      //  // get either "less" or "more"
       // .groupBy(d => _.last(d[surveyQs.vizmoreless].split(' ')).toLowerCase())
       .groupBy(d => !!d[surveyQs.vizfrustrations])
       .map((answers, type) => {
         return {
           type,
           bars: _.map(surveyQs.percents, (question, type) => {
+            var bars = _.chain(answers).filter(a => a[question]).map(a => parseFloat(a[question])).value();
+            bars = d3.histogram().domain([0, 100]).thresholds(10)(bars);
+            var totals = _.chain(this.state.survey).filter(a => a[question]).map(a => parseFloat(a[question])).value();
+            totals = d3.histogram().domain([0, 100]).thresholds(10)(totals);
             return {
               type,
-              bars: _.chain(answers).filter(a => a[question]).map(a => parseFloat(a[question])).value(),
+              bars,
+              totals,
             }
           }),
         }
       }).value();
 
-    console.log(graph1Data)
     return (
       <div className="App">
         <Bars {...props} data={graph1Data} />
