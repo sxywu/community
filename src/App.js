@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import _ from 'lodash';
+import metadata from './data/metadata.json';
 
 class App extends Component {
 
@@ -15,7 +16,6 @@ class App extends Component {
   }
 
   render() {
-
 
     return (
       <div className="App">

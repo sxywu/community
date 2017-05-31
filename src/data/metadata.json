@@ -1,0 +1,19 @@
+{
+  "frustration": "What is your biggest frustration with doing data visualization in your job?",
+  "experience": "How many years have you been doing data visualization?",
+  "intended": "Did you set out to work in data visualization or did you fall into it?",
+  "intendedMap": {
+    "Ended up doing data visualization as a requirement of the job": false,
+    "Intended to work in data visualization": true
+  },
+  "questions": [
+    {
+      "question": "What focus is data visualization in your work?",
+      "answers": {
+        "Data visualization is the focus of my job": [0, "primary"],
+        "Data visualization is an important secondary part of my job but not the focus": [1, "secondary"],
+        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "not focus"]
+      }
+    }
+  ]
+}
