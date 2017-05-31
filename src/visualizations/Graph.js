@@ -23,20 +23,24 @@ class Graph extends Component {
 
   componentDidMount() {
     this.container = d3.select(this.refs.container)
-      .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
+      .attr('transform', 'translate(' + [this.props.width / 2, answerHeight * this.props.question.y] + ')');
   }
 
   componentDidUpdate() {
     if (!this.data) {
       var {question, answers} = this.props.question;
-      this.data = _.map(this.props.survey, d => {
-        var [order, answer] = answers[d.data[question]];
-        var focusY = (order + 0.5) * answerHeight;
-        return Object.assign({}, d, {
-          focusY,
-          y: focusY + (d.intended ? -1 : 1) * _.random(this.props.centerSize / 4, this.props.centerSize / 2),
-        });
-      });
+      console.log(_.countBy(this.props.survey, d => d.data[question]))
+
+      this.data = _.chain(this.props.survey)
+        .filter(d => answers[d.data[question]])
+        .map(d => {
+          var [order, answer] = answers[d.data[question]];
+          var focusY = (order + 0.5) * answerHeight;
+          return Object.assign({}, d, {
+            focusY,
+            y: focusY + (d.intended ? -1 : 1) * _.random(this.props.centerSize / 4, this.props.centerSize / 2),
+          });
+        }).value();
 
       this.renderCircles();
     }

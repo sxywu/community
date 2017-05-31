@@ -65,8 +65,8 @@ class App extends Component {
       metadata,
       centerSize,
     };
-    var questions = _.map(metadata.questions, question => {
-      return (<Graph {...props} {...this.state} question={question} />);
+    var questions = _.map(metadata.questions, (question, i) => {
+      return (<Graph key={i} {...props} {...this.state} question={question} />);
     });
 
     return (

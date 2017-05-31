@@ -8,11 +8,30 @@
   },
   "questions": [
     {
+      "y": 0,
       "question": "What focus is data visualization in your work?",
       "answers": {
         "Data visualization is the focus of my job": [0, "primary"],
         "Data visualization is an important secondary part of my job but not the focus": [1, "secondary"],
         "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "not focus"]
+      }
+    },
+    {
+      "y": 3,
+      "question": "For your current role or the majority of your projects: were you hired to do data visualization only or is data visualization a part of your job/project description?",
+      "answers": {
+        "Hired to do data visualization": [0, "True"],
+        "Data visualization is only part of my job": [1, "False"]
+      }
+    },
+    {
+      "y": 5,
+      "question": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
+      "answers": {
+        "Data Visualization Role has higher compensation": [0, "Higher"],
+        "Data Visualization Role has same compensation": [1, "Same"],
+        "Data Visualization Role has Lower compensation": [2, "Lower"],
+        "Don't Know/Prefer Not to Say": [3, "Don't know"]
       }
     }
   ]
