@@ -8,11 +8,10 @@ import metadata from './data/metadata.json';
 
 var width = 800;
 var centerSize = 100;
-var margin = {left: 20, top: 20};
+var margin = {left: 40, right: 40, top: 20, bottom: 20};
 
 var experienceScale = d3.scaleLinear();
-var xScale = d3.scaleLinear()
-	.range([width / 2 - centerSize, 0]);
+var xScale = d3.scaleLinear().range([-width / 2 + margin.left, width / 2 - margin.right]);
 var colorScale = chroma
 	.scale(['#53c3ac', '#7386e8', '#e68fc3']);
 

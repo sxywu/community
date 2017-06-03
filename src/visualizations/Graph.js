@@ -3,7 +3,8 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 
 var radius = 3;
-var answerHeight = 100;
+var answerHeight = 200;
+var fontSize = 12;
 
 class Graph extends Component {
   constructor(props) {
@@ -18,6 +19,17 @@ class Graph extends Component {
       .force('y', d3.forceY().y(d => d.focusY))
     	.force('collide', d3.forceCollide().radius(radius))
     	.on('tick', this.onTick)
+      .on('end', () => {
+        var data = _.map(this.data, d => {
+          return {
+            id: d.id,
+            color: d.color,
+            x: d.x,
+            y: d.y - d.focusY,
+          }
+        });
+        console.log(JSON.stringify(data))
+      })
     	.stop();
   }
 
@@ -29,15 +41,17 @@ class Graph extends Component {
   componentDidUpdate() {
     if (!this.data) {
       var {question, answers} = this.props.question;
+      // console.log(_.countBy(this.props.survey, d => d.data[question]))
 
+      var positionsById = _.keyBy(this.props.positions, 'id');
       this.data = _.chain(this.props.survey)
         .filter(d => answers[d.data[question]])
         .map(d => {
           var [order, answer] = answers[d.data[question]];
-          var focusY = (order + 0.5) * answerHeight;
+          var focusY = order * answerHeight + (d.frustrated ? 0.25 : 0.75) * answerHeight;
           return Object.assign({}, d, {
             focusY,
-            y: focusY + (d.intended ? -1 : 1) * _.random(this.props.centerSize / 4, this.props.centerSize / 2),
+            y: focusY + (d.intended ? -1 : 1) * _.random(0, answerHeight / 2),
           });
         }).value();
 
@@ -72,7 +86,7 @@ class Graph extends Component {
       .attr('text-anchor', 'middle')
       .attr('dy', '.35em')
       .merge(answer)
-      .attr('y', d => (d[0] + 0.5) * answerHeight)
+      .attr('y', d => d[0] * answerHeight + fontSize)
       .text(d => d[1]);
   }
 
