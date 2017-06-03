@@ -13,7 +13,7 @@
       "answers": {
         "Data visualization is the focus of my job": [0, "Primary"],
         "Data visualization is an important secondary part of my job but not the focus": [1, "Secondary"],
-        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "Only one of several"]
+        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "One of several"]
       }
     },
     {
@@ -30,8 +30,7 @@
       "answers": {
         "Data Visualization Role has higher compensation": [0, "Higher"],
         "Data Visualization Role has same compensation": [1, "Same"],
-        "Data Visualization Role has Lower compensation": [2, "Lower"],
-        "Don't Know/Prefer Not to Say": [3, "Don't know"]
+        "Data Visualization Role has Lower compensation": [2, "Lower"]
       }
     },
     {
