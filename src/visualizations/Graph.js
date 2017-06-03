@@ -42,14 +42,16 @@ class Graph extends Component {
         }).value();
 
       this.renderCircles();
+      this.renderAnswer();
     }
   }
 
   renderCircles() {
     // draw the circles
-    this.circles = this.container.selectAll('circle')
+    this.circles = this.container.selectAll('.dot')
     	.data(this.data, d => d.id)
       .enter().append('circle')
+      .classed('dot', true)
     	.attr('r', radius)
     	.attr('fill', d => d.intended ? d.color : '#fff')
     	.attr('stroke', d => d.color)
@@ -57,6 +59,21 @@ class Graph extends Component {
 
     this.simulation.nodes(this.data)
     	.alpha(0.9).restart();
+  }
+
+  renderAnswer() {
+    var answer = this.container.selectAll('.label')
+      .data(_.values(this.props.question.answers), d => d[0]);
+
+    answer.exit().remove();
+
+    answer.enter().append('text')
+      .classed('label', true)
+      .attr('text-anchor', 'middle')
+      .attr('dy', '.35em')
+      .merge(answer)
+      .attr('y', d => (d[0] + 0.5) * answerHeight)
+      .text(d => d[1]);
   }
 
   onTick() {
