@@ -29,7 +29,6 @@ class Graph extends Component {
   componentDidUpdate() {
     if (!this.data) {
       var {question, answers} = this.props.question;
-      console.log(_.countBy(this.props.survey, d => d.data[question]))
 
       this.data = _.chain(this.props.survey)
         .filter(d => answers[d.data[question]])
@@ -77,12 +76,12 @@ class Graph extends Component {
       fontStyle: 'italic',
       lineHeight: 1.6,
     };
-    var {question, answers} = this.props.question;
+    var {questionMap, answers} = this.props.question;
     var height = _.size(answers) * answerHeight;
 
     return (
       <div style={style}>
-        <div style={headerStyle}>{question}</div>
+        <h3 style={headerStyle}>{questionMap}</h3>
         <svg ref='svg' width={this.props.width} height={height}>
           <g ref='container' />
         </svg>

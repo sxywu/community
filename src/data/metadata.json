@@ -8,25 +8,25 @@
   },
   "questions": [
     {
-      "y": 0,
       "question": "What focus is data visualization in your work?",
+      "questionMap": "What focus is data visualization in your work?",
       "answers": {
-        "Data visualization is the focus of my job": [0, "primary"],
-        "Data visualization is an important secondary part of my job but not the focus": [1, "secondary"],
-        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "not focus"]
+        "Data visualization is the focus of my job": [0, "Primary"],
+        "Data visualization is an important secondary part of my job but not the focus": [1, "Secondary"],
+        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "Only one of several"]
       }
     },
     {
-      "y": 3,
       "question": "For your current role or the majority of your projects: were you hired to do data visualization only or is data visualization a part of your job/project description?",
+      "questionMap": "Were you hired to do data visualization only?",
       "answers": {
-        "Hired to do data visualization": [0, "True"],
-        "Data visualization is only part of my job": [1, "False"]
+        "Hired to do data visualization": [0, "Yes"],
+        "Data visualization is only part of my job": [1, "No"]
       }
     },
     {
-      "y": 5,
       "question": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
+      "questionMap": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
       "answers": {
         "Data Visualization Role has higher compensation": [0, "Higher"],
         "Data Visualization Role has same compensation": [1, "Same"],
@@ -35,8 +35,8 @@
       }
     },
     {
-      "y": 9,
       "question": "Is there a separate group that does data visualizations or are you embedded in another group? (data science UX UI web data engineering IT etc)",
+      "questionMap": "Is there a separate group that does data visualizations or are you embedded in another group?",
       "answers": {
         "Separate data visualization team": [0, "Separate"],
         "Embedded in another team": [1, "Embedded"],
