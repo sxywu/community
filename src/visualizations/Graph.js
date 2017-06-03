@@ -23,7 +23,7 @@ class Graph extends Component {
 
   componentDidMount() {
     this.container = d3.select(this.refs.container)
-      .attr('transform', 'translate(' + [this.props.width / 2, answerHeight * this.props.question.y] + ')');
+      .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
   }
 
   componentDidUpdate() {
@@ -66,9 +66,27 @@ class Graph extends Component {
   }
 
   render() {
+    var style = {
+      width: this.props.width,
+      textAlign: 'center',
+      margin: 20,
+    };
+    var headerStyle = {
+      width: this.props.width * 0.75,
+      margin: 'auto',
+      fontStyle: 'italic',
+      lineHeight: 1.6,
+    };
+    var {question, answers} = this.props.question;
+    var height = _.size(answers) * answerHeight;
 
     return (
-      <g ref='container' />
+      <div style={style}>
+        <div style={headerStyle}>{question}</div>
+        <svg ref='svg' width={this.props.width} height={height}>
+          <g ref='container' />
+        </svg>
+      </div>
     );
   }
 }

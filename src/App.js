@@ -53,12 +53,6 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
-    this.svg = d3.select(this.refs.svg)
-     .attr('width', width)
-     .attr('height', 1000);
-  }
-
   render() {
     var props = {
       width,
@@ -71,9 +65,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <svg ref='svg'>
-          {questions}
-        </svg>
+        {questions}
       </div>
     );
   }
