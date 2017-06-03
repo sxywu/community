@@ -33,6 +33,16 @@
         "Data Visualization Role has Lower compensation": [2, "Lower"],
         "Don't Know/Prefer Not to Say": [3, "Don't know"]
       }
+    },
+    {
+      "y": 9,
+      "question": "Is there a separate group that does data visualizations or are you embedded in another group? (data science UX UI web data engineering IT etc)",
+      "answers": {
+        "Separate data visualization team": [0, "Separate"],
+        "Embedded in another team": [1, "Embedded"],
+        "Both": [2, "Both"]
+      }
     }
+
   ]
 }
