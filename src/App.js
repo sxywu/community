@@ -14,7 +14,7 @@ var experienceScale = d3.scaleLinear();
 var xScale = d3.scaleLinear()
 	.range([0, width / 2 - centerSize]);
 var colorScale = chroma
-	.scale(['#e68fc3', '#7386e8', '#53c3ac']);
+	.scale(['#53c3ac', '#7386e8', '#e68fc3']);
 
 class App extends Component {
 
