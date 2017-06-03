@@ -1,6 +1,7 @@
 {
   "frustration": "What is your biggest frustration with doing data visualization in your job?",
   "experience": "How many years have you been doing data visualization?",
+  "percentday": "Percent of your day focused on creating/implementing/productizing data visualizations?",
   "intended": "Did you set out to work in data visualization or did you fall into it?",
   "intendedMap": {
     "Ended up doing data visualization as a requirement of the job": false,
