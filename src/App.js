@@ -24,18 +24,17 @@ class App extends Component {
   }
 
   componentWillMount() {
-    var {frustration, percentday, intended, intendedMap} = metadata;
+    var {frustration, domain, intended, intendedMap} = metadata;
 
     d3.csv(process.env.PUBLIC_URL + '/data/survey.csv', survey => {
-      var xDomain = d3.extent(survey, d => ++d[percentday]);
+      var xDomain = d3.extent(survey, d => ++d[domain]);
       experienceScale.domain(xDomain);
 
       // get the data ready
       survey = _.map(survey, (d, i) => {
-        var exp = experienceScale(d[percentday]);
+        var exp = experienceScale(d[domain]);
         var frustrated = !!d[frustration];
-        var focusX = (frustrated ? -1 : 1) * xScale(exp);
-        focusX += (frustrated ? -1 : 1) * centerSize / 2;
+        var focusX = xScale(exp);
         var intend = intendedMap[d[intended]];
 
         return {

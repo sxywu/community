@@ -1,7 +1,6 @@
 {
   "frustration": "What is your biggest frustration with doing data visualization in your job?",
-  "experience": "How many years have you been doing data visualization?",
-  "percentday": "Percent of your day focused on creating/implementing/productizing data visualizations?",
+  "domain": "Percent of your day focused on creating/implementing/productizing data visualizations?",
   "intended": "Did you set out to work in data visualization or did you fall into it?",
   "intendedMap": {
     "Ended up doing data visualization as a requirement of the job": false,
@@ -33,16 +32,6 @@
         "Data Visualization Role has same compensation": [1, "Same"],
         "Data Visualization Role has Lower compensation": [2, "Lower"]
       }
-    },
-    {
-      "question": "Is there a separate group that does data visualizations or are you embedded in another group? (data science UX UI web data engineering IT etc)",
-      "questionMap": "Is there a separate group that does data visualizations or are you embedded in another group?",
-      "answers": {
-        "Separate data visualization team": [0, "Separate"],
-        "Embedded in another team": [1, "Embedded"],
-        "Both": [2, "Both"]
-      }
     }
-
   ]
 }
