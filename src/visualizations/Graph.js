@@ -78,12 +78,27 @@ class Graph extends Component {
               totalY += 3 * fontSize;
             }
 
+            // calculate each group height
             var [y1, y2] = d3.extent(d, d => d.y);
             var height = y2 - y1;
             var y = totalY + height / 2;
             totalY += height + padding;
 
-            return {y, dots: d};
+            // calculate group box plot
+            var percents = _.chain(d).map(d => d.x).sortBy().value();
+            var quartiles = [
+              d3.quantile(percents, 0), d3.quantile(percents, 0.25),
+              d3.quantile(percents, 0.5), d3.quantile(percents, 0.75),
+              d3.quantile(percents, 1),
+            ];
+            var box = {
+              height,
+              lines: [[quartiles[0], quartiles[1]], [quartiles[3], quartiles[4]]],
+              box: [quartiles[1], quartiles[3]],
+              median: quartiles[2],
+            };
+
+            return {y, dots: d, box};
           }
         }).value();
 
@@ -106,9 +121,9 @@ class Graph extends Component {
 
     this.groups.exit().remove();
 
-    this.groups = this.groups.enter().append('g')
-      .classed('dot', true)
-      .merge(this.groups)
+    var enter = this.groups.enter().append('g')
+      .classed('dot', true);
+    this.groups = enter.merge(this.groups)
       .attr('transform', d => 'translate(' + [0, d.y] + ')');
 
     this.circles = this.groups.selectAll('circle')
@@ -123,6 +138,43 @@ class Graph extends Component {
     	.attr('stroke', d => d.color)
       .attr('cx', d => d.x)
     	.attr('cy', d => d.y);
+
+      // box plot only if positions are saved
+      if (this.props.positions) {
+        var box = enter.append('g')
+          .attr('fill', 'none')
+          .attr('stroke', '#333')
+          // .attr('opacity', 0.75);
+
+        var lines = box.selectAll('.line')
+          .data(d => d.box.lines);
+        lines.exit().remove();
+        lines.enter().append('line')
+          .classed('line', true)
+          .merge(lines)
+          .attr('x1', d => d[0])
+          .attr('x2', d => d[1]);
+
+        // the box
+        box.append('rect')
+          .classed('box', true);
+        box.select('.box')
+          .datum(d => d.box)
+          .attr('x', d => d.box[0])
+          .attr('width', d => d.box[1] - d.box[0])
+          .attr('y', d => -d.height / 2)
+          .attr('height', d => d.height);
+
+        // the median
+        box.append('line')
+          .classed('median', true);
+        box.select('.median')
+          .datum(d => d.box)
+          .attr('x1', d => d.median)
+          .attr('x2', d => d.median)
+          .attr('y1', d => -d.height / 2)
+          .attr('y2', d => d.height / 2);
+      }
   }
 
   renderAnswer() {
