@@ -5,6 +5,7 @@ import chroma from 'chroma-js';
 
 import Graph from './visualizations/Graph';
 import metadata from './data/metadata.json';
+import positions from './data/positions.json';
 
 var width = 800;
 var centerSize = 100;
@@ -58,7 +59,8 @@ class App extends Component {
       centerSize,
     };
     var questions = _.map(metadata.questions, (question, i) => {
-      return (<Graph key={i} {...props} {...this.state} question={question} />);
+      return (<Graph key={i} {...props} {...this.state}
+				positions={positions && positions[i]} question={question} />);
     });
 
     return (
