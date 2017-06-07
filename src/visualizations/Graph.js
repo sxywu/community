@@ -133,6 +133,8 @@ class Graph extends Component {
     this.circles = this.circles.enter().append('circle')
     	.attr('r', radius)
     	.attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.75)
+      .attr('fill-opacity', 0.5)
       .merge(this.circles)
     	.attr('fill', d => d.intended ? d.color : '#fff')
     	.attr('stroke', d => d.color)
@@ -143,8 +145,7 @@ class Graph extends Component {
       if (this.props.positions) {
         var box = enter.append('g')
           .attr('fill', 'none')
-          .attr('stroke', '#333')
-          // .attr('opacity', 0.75);
+          .attr('stroke', '#333');
 
         var lines = box.selectAll('.line')
           .data(d => d.box.lines);
@@ -162,8 +163,9 @@ class Graph extends Component {
           .datum(d => d.box)
           .attr('x', d => d.box[0])
           .attr('width', d => d.box[1] - d.box[0])
-          .attr('y', d => -d.height / 2)
-          .attr('height', d => d.height);
+          .attr('y', -1)
+          .attr('height', 2)
+          .attr('fill', '#000');
 
         // the median
         box.append('line')
