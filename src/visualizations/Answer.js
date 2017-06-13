@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as d3 from 'd3';
 import _ from 'lodash';
 
+var defaultHeight = 50;
 var radius = 3;
 var fontSize = 12;
 var padding = 20;
@@ -23,7 +24,7 @@ class Graph extends Component {
   }
 
   componentDidMount() {
-    this.svg = d3.select(this.refs.svg);
+    this.svg = d3.select(this.refs.svg).attr('height', defaultHeight);
     this.container = this.svg.append('g')
       .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
     this.legend = this.svg.append('g')
@@ -43,7 +44,7 @@ class Graph extends Component {
       this.renderCircles();
 
       this.simulation.nodes(this.data)
-      	.alpha(0.9).restart();
+      	.alpha(0.75).restart();
     }
   }
 
@@ -57,7 +58,7 @@ class Graph extends Component {
     var enter = this.groups.enter().append('g')
       .classed('dot', true);
     this.groups = enter.merge(this.groups)
-      .attr('transform', d => 'translate(' + [0, 100 + (d[0].frustrated ? 1 : -1) * padding] + ')');
+      .attr('transform', d => 'translate(' + [0, (d[0].frustrated ? 1 : -1) * padding] + ')');
 
     this.circles = this.groups.selectAll('circle')
       .data(d => d, d => d.id);
@@ -66,7 +67,6 @@ class Graph extends Component {
     this.circles = this.circles.enter().append('circle')
     	.attr('r', radius)
     	.attr('stroke-width', 2)
-      .attr('stroke-opacity', 0.75)
       .attr('fill-opacity', 0.5)
       .merge(this.circles)
     	.attr('fill', d => d.intended ? d.color : '#fff')
@@ -113,11 +113,19 @@ class Graph extends Component {
   onTick() {
     this.circles.attr('cx', d => d.x)
     	.attr('cy', d => d.y = d.frustrated ? Math.max(0, d.y) : Math.min(0, d.y));
+
+    var [minY, maxY] = d3.extent(this.data, d => d.y);
+    var height = (maxY - minY) + 2.5 * padding;
+    this.container.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
+    this.svg.attr('height', Math.max(defaultHeight, height));
   }
 
   render() {
+    var style = {
+      overflow: 'visible',
+    };
     return (
-      <svg ref='svg' width={this.props.width}>
+      <svg ref='svg' width={this.props.width} style={style}>
       </svg>
     );
   }
