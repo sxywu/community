@@ -18,10 +18,10 @@ class Graph extends Component {
       lineHeight: 1.6,
     };
     var {questionMap} = this.props.question;
-    var answers = _.map(this.props.question.answers, answer => {
+    var answers = _.map(this.props.question.answers, (value, answer) => {
       return (
         <div>
-          <h4>{answer[1]}</h4>
+          <h4>{value[1]}</h4>
           <Answer {...this.props} answer={answer} />
         </div>
       );
