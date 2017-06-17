@@ -38,7 +38,7 @@ class Graph extends Component {
       this.data = _.chain(this.props.survey)
         .filter(d => d.data[question] && d.data[question] === answer)
         .map(d => {
-          var y = (d.frustrated ? 1 : -1) * (d.intended ? 100 : 200);
+          var y = (d.frustrated ? 1 : -1) * (d.intended ? _.random(padding, 100) : _.random(150, 200));
           return Object.assign({}, d, {y});
         }).value();
       this.renderCircles();
@@ -58,7 +58,7 @@ class Graph extends Component {
     var enter = this.groups.enter().append('g')
       .classed('dot', true);
     this.groups = enter.merge(this.groups)
-      .attr('transform', d => 'translate(' + [0, (d[0].frustrated ? 1 : -1) * padding] + ')');
+      // .attr('transform', d => 'translate(' + [0, (d[0].frustrated ? 1 : -1) * padding] + ')');
 
     this.circles = this.groups.selectAll('circle')
       .data(d => d, d => d.id);
@@ -112,7 +112,7 @@ class Graph extends Component {
 
   onTick() {
     this.circles.attr('cx', d => d.x)
-    	.attr('cy', d => d.y = d.frustrated ? Math.max(0, d.y) : Math.min(0, d.y));
+    	.attr('cy', d => d.y = d.frustrated ? Math.max(padding, d.y) : Math.min(-padding, d.y));
 
     var [minY, maxY] = d3.extent(this.data, d => d.y);
     var height = (maxY - minY) + 2.5 * padding;
