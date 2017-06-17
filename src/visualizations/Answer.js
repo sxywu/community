@@ -6,12 +6,15 @@ var defaultHeight = 50;
 var radius = 3;
 var fontSize = 12;
 var padding = 20;
+var hoverWidth = 250;
 
 class Graph extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {hovered: {}}
     this.onTick = this.onTick.bind(this);
+    this.updateHover = this.updateHover.bind(this);
   }
 
   componentWillMount() {
@@ -29,6 +32,8 @@ class Graph extends Component {
       .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
     this.legend = this.svg.append('g')
       .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
+    this.hover = d3.select(this.refs.hover)
+      .style('display', 'none');
   }
 
   componentDidUpdate() {
@@ -70,7 +75,9 @@ class Graph extends Component {
       .attr('fill-opacity', 0.5)
       .merge(this.circles)
     	.attr('fill', d => d.intended ? d.color : '#fff')
-    	.attr('stroke', d => d.color);
+    	.attr('stroke', d => d.color)
+      .on('mouseover', this.updateHover)
+      .on('mouseleave', d => this.hover.style('display', 'none'));
   }
 
   renderLegend(enter) {
@@ -120,13 +127,36 @@ class Graph extends Component {
     this.svg.attr('height', Math.max(defaultHeight, height));
   }
 
+  updateHover(d) {
+    var [x, y] = d3.mouse(this.refs.svg);
+    var {frustration, intended, domain} = this.props.metadata;
+    var html = d.data[frustration];
+    this.hover
+      .style('display', 'block')
+      .style('top', (y + 10) + 'px')
+      .style('left', (x - hoverWidth / 2) + 'px')
+      .html(html);
+  }
+
   render() {
     var style = {
-      overflow: 'visible',
+      position: 'relative',
     };
+    var hoverStyle = {
+      position: 'absolute',
+      padding: 20,
+      boxShadow: '0 0 5px #ccc',
+      backgroundColor: '#fff',
+      width: hoverWidth,
+      zIndex: 1000,
+      lineHeight: 1.6,
+    };
+
     return (
-      <svg ref='svg' width={this.props.width} style={style}>
-      </svg>
+      <div style={style}>
+        <svg ref='svg' width={this.props.width} style={{overflow: 'visible'}} />
+        <div ref='hover' style={hoverStyle} />
+      </div>
     );
   }
 }
