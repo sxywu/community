@@ -86,14 +86,50 @@ class Graph extends Component {
   }
 
   renderLegend() {
+    var radius = padding / 4;
+    var data = _.chain(this.data)
+      .groupBy(d => d.frustrated)
+      .map((nodes) => {
+        var y = (nodes[0].frustrated ? padding: -padding) * 0.75;
+        var xArray = _.chain(nodes).map(node => node.x).sortBy().value();
+        var q1 = d3.quantile(xArray, 0.25);
+        var q2 = d3.quantile(xArray, 0.5);
+        var q3 = d3.quantile(xArray, 0.75);
+        return {
+          y,
+          lines: [[q1, q2], [q2, q3]],
+          circles: [q2],
+        };
+      }).value();
 
+    var legend = this.legend.selectAll('g').data(data);
+    legend.exit().remove();
+
+    var enter = legend.enter().append('g');
+    enter.append('line')
+      .attr('x1', -this.props.width / 2)
+      .attr('x2', this.props.width / 2)
+      .attr('stroke', '#999')
+      .attr('opacity', 0.5);
+
+    legend = enter.merge(legend)
+      .attr('transform', d => 'translate(' + [0, d.y] + ')');
+
+    var lines = legend.selectAll('.line').data(d => d.lines);
+    lines.exit().remove();
+    lines.enter().append('line')
+      .attr('line', true)
+      .merge(lines)
+      .attr('x1', d => d[0])
+      .attr('x2', d => d[1])
+      .attr('stroke', '#999')
+      .attr('stroke-width', radius);
   }
 
   renderAxis() {
     this.axis.call(this.props.xAxis);
     this.axis.selectAll('path').remove();
-    this.axis.selectAll('line').attr('stroke', '#999').attr('opacity', 0.5)
-      .attr('y1', -padding / 2).attr('y2', padding / 2);
+    this.axis.selectAll('line').remove();
     this.axis.selectAll('text').attr('y', 0).attr('dy', '.35em');
   }
 
