@@ -13,6 +13,8 @@ var margin = {left: 40, right: 40, top: 20, bottom: 20};
 
 var experienceScale = d3.scaleLinear();
 var xScale = d3.scaleLinear().range([-width / 2 + margin.left, width / 2 - margin.right]);
+var xAxis = d3.axisBottom().scale(xScale)
+	.tickSizeOuter(0).tickFormat(d => d + '%');
 var colorScale = chroma
 	.scale(['#53c3ac', '#7386e8', '#e68fc3']);
 
@@ -27,14 +29,16 @@ class App extends Component {
     var {frustration, domain, intended, intendedMap} = metadata;
 
     d3.csv(process.env.PUBLIC_URL + '/data/survey.csv', survey => {
-      var xDomain = d3.extent(survey, d => ++d[domain]);
+      var xDomain = d3.extent(survey, d => d[domain] = ++d[domain] - 1);
+			console.log(xDomain)
       experienceScale.domain(xDomain);
+			xScale.domain(xDomain);
 
       // get the data ready
       survey = _.map(survey, (d, i) => {
         var exp = experienceScale(d[domain]);
+        var focusX = xScale(d[domain]);
         var frustrated = !!d[frustration];
-        var focusX = xScale(exp);
         var intend = intendedMap[d[intended]];
 
         return {
@@ -57,6 +61,7 @@ class App extends Component {
       width,
       metadata,
       centerSize,
+			xAxis,
     };
     return (
       <div className="App">
