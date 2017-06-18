@@ -103,8 +103,13 @@ class Graph extends Component {
 
         return {
           y,
-          lines: [[q0, q4, 1, '#000'], [q1, q2, radius, q1Color], [q2, q3, radius, q3Color]],
-          circles: [[q2, radius / 2, q2Color]],
+          lines: [
+            [q0, q4, 1, '#000'],
+            [q1, q2, radius, q1Color],
+            [q2, q3, radius, q3Color],
+            [q2 - 1, q2 + 1, radius, '#000'],
+          ],
+          circles: [],
         };
       }).value();
 
