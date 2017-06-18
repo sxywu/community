@@ -32,6 +32,31 @@
         "Data Visualization Role has same compensation": [1, "Same"],
         "Data Visualization Role has Lower compensation": [2, "Lower"]
       }
+    },
+    {
+      "question": "Is there a separate group that does data visualizations or are you embedded in another group? (data science UX UI web data engineering IT etc)",
+      "questionMap": "Is there a separate group that does data visualizations or are you embedded in another group?",
+      "answers": {
+        "Separate data visualization team": [0, "Separate"],
+        "Embedded in another team": [1, "Embedded"],
+        "Both": [2, "Both"]
+      }
+    },
+    {
+      "question": "Are data visualization specialists represented in the leadership of your organization?",
+      "questionMap": "Are data visualization specialists represented in the leadership of your organization?",
+      "answers": {
+        "Yes": [0, "Yes"],
+        "No": [1, "No"]
+      }
+    },
+    {
+      "question": "What knowledge level do they have of the data you are visualizing for them?",
+      "questionMap": "What knowledge level do they have of the data you are visualizing for them?",
+      "answers": {
+        "Yes": [0, "Yes"],
+        "No": [1, "No"]
+      }
     }
   ]
 }
