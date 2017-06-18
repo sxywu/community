@@ -49,14 +49,6 @@
         "Yes": [0, "Yes"],
         "No": [1, "No"]
       }
-    },
-    {
-      "question": "What knowledge level do they have of the data you are visualizing for them?",
-      "questionMap": "What knowledge level do they have of the data you are visualizing for them?",
-      "answers": {
-        "Yes": [0, "Yes"],
-        "No": [1, "No"]
-      }
     }
   ]
 }
