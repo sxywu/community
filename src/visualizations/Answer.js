@@ -20,7 +20,7 @@ class Graph extends Component {
   componentWillMount() {
     this.simulation = d3.forceSimulation()
     	.force('x', d3.forceX().x(d => d.focusX))
-      .force('y', d3.forceY(0))
+      .force('y', d3.forceY().y(d => d.frustrated ? padding : -padding))
     	.force('collide', d3.forceCollide().radius(radius))
     	.on('tick', this.onTick)
       .stop();
@@ -118,11 +118,11 @@ class Graph extends Component {
   }
 
   onTick() {
-    this.circles.attr('cx', d => d.x)
+    this.circles.attr('cx', d => d.x = Math.max(-this.props.width / 2, Math.min(this.props.width / 2, d.x)))
     	.attr('cy', d => d.y = d.frustrated ? Math.max(padding, d.y) : Math.min(-padding, d.y));
 
     var [minY, maxY] = d3.extent(this.data, d => d.y);
-    var height = (maxY - minY) + 2.5 * padding;
+    var height = (maxY - minY) + padding;
     this.container.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
     this.svg.attr('height', Math.max(defaultHeight, height));
   }

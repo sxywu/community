@@ -9,7 +9,10 @@ class Graph extends Component {
     var style = {
       width: this.props.width,
       textAlign: 'center',
-      margin: 20,
+      margin: 10,
+      padding: 10,
+      display: 'inline-block',
+      verticalAlign: 'top',
     };
     var headerStyle = {
       width: this.props.width * 0.75,
@@ -21,7 +24,7 @@ class Graph extends Component {
     var answers = _.map(this.props.question.answers, (value, answer) => {
       return (
         <div>
-          <h4>{value[1]}</h4>
+          <h4 style={{margin: 0, marginTop: 20}}>{value[1]}</h4>
           <Answer {...this.props} answer={answer} />
         </div>
       );

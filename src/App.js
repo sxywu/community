@@ -7,7 +7,7 @@ import Graph from './visualizations/Graph';
 import metadata from './data/metadata.json';
 import positions from './data/positions.json';
 
-var width = 800;
+var width = 600;
 var centerSize = 100;
 var margin = {left: 40, right: 40, top: 20, bottom: 20};
 
@@ -58,14 +58,10 @@ class App extends Component {
       metadata,
       centerSize,
     };
-    var questions = _.map(metadata.questions, (question, i) => {
-      return (<Graph key={i} {...props} {...this.state}
-				positions={positions && positions[i]} question={question} />);
-    });
-
     return (
       <div className="App">
-        {questions}
+				<Graph {...props} {...this.state} question={metadata.questions[0]} />
+				<Graph {...props} {...this.state} question={metadata.questions[1]} />
       </div>
     );
   }
