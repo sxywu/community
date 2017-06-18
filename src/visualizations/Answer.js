@@ -90,40 +90,48 @@ class Graph extends Component {
     var data = _.chain(this.data)
       .groupBy(d => d.frustrated)
       .map((nodes) => {
-        var y = (nodes[0].frustrated ? padding: -padding) * 0.75;
+        var y = (nodes[0].frustrated ? padding: -padding) * 0.6;
         var xArray = _.chain(nodes).map(node => node.x).sortBy().value();
+        var q0 = d3.quantile(xArray, 0);
         var q1 = d3.quantile(xArray, 0.25);
         var q2 = d3.quantile(xArray, 0.5);
         var q3 = d3.quantile(xArray, 0.75);
+        var q4 = d3.quantile(xArray, 1);
+        var q1Color = this.props.colorScale(this.props.xScale.invert(q1));
+        var q2Color = this.props.colorScale(this.props.xScale.invert(q2));
+        var q3Color = this.props.colorScale(this.props.xScale.invert(q3));
+
         return {
           y,
-          lines: [[q1, q2], [q2, q3]],
-          circles: [q2],
+          lines: [[q0, q4, 1, '#000'], [q1, q2, radius, q1Color], [q2, q3, radius, q3Color]],
+          circles: [[q2, radius / 2, q2Color]],
         };
       }).value();
 
     var legend = this.legend.selectAll('g').data(data);
     legend.exit().remove();
-
     var enter = legend.enter().append('g');
-    enter.append('line')
-      .attr('x1', -this.props.width / 2)
-      .attr('x2', this.props.width / 2)
-      .attr('stroke', '#999')
-      .attr('opacity', 0.5);
-
     legend = enter.merge(legend)
       .attr('transform', d => 'translate(' + [0, d.y] + ')');
 
-    var lines = legend.selectAll('.line').data(d => d.lines);
+    var lines = legend.selectAll('line').data(d => d.lines);
     lines.exit().remove();
     lines.enter().append('line')
-      .attr('line', true)
+      .style('shape-rendering', 'cripEdges')
       .merge(lines)
       .attr('x1', d => d[0])
       .attr('x2', d => d[1])
-      .attr('stroke', '#999')
-      .attr('stroke-width', radius);
+      .attr('stroke', d => d[3])
+      .attr('stroke-width', d => d[2]);
+
+    var circles = legend.selectAll('circle').data(d => d.circles);
+    circles.exit().remove();
+    circles.enter().append('circle')
+      .attr('stroke', '#000')
+      .merge(circles)
+      .attr('cx', d => d[0])
+      .attr('r', d => d[1])
+      .attr('fill', d => d[2]);
   }
 
   renderAxis() {
