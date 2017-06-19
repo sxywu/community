@@ -62,10 +62,19 @@ class App extends Component {
 			xScale,
 			colorScale,
     };
+		var graphStyle = {
+			width: 2 * width,
+			margin: '20px auto',
+			boxShadow: '0 0 5px #ccc',
+			border: '1px solid #ccc',
+			padding: '40px 20px',
+		};
     return (
       <div className="App">
-				<Graph {...props} {...this.state} question={metadata.questions[0]} />
-				<Graph {...props} {...this.state} question={metadata.questions[1]} />
+				<div style={graphStyle}>
+					<Graph {...props} {...this.state} question={metadata.questions[0]} />
+					<Graph {...props} {...this.state} question={metadata.questions[1]} />
+				</div>
       </div>
     );
   }

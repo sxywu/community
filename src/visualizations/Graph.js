@@ -9,8 +9,6 @@ class Graph extends Component {
     var style = {
       width: this.props.width,
       textAlign: 'center',
-      margin: 10,
-      padding: 10,
       display: 'inline-block',
       verticalAlign: 'top',
     };
