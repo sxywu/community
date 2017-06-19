@@ -21,11 +21,17 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {survey: []};
+    this.state = {survey: [], brushed: {}};
+		this.updateBrush = this.updateBrush.bind(this);
   }
 
   componentWillMount() {
-    var {frustration, domain, intended, intendedMap} = metadata;
+    var {frustration, domain, intended, intendedMap, questions} = metadata;
+		_.each(questions, (question, i) => {
+			_.each(question.answers, (answer) => {
+				answer.push(i + ',' + answer[0]);
+			});
+		});
 
     d3.csv(process.env.PUBLIC_URL + '/data/survey.csv', survey => {
       var xDomain = d3.extent(survey, d => d[domain] = ++d[domain] - 1);
@@ -48,10 +54,22 @@ class App extends Component {
           id: i,
         }
       });
+			this.surveyById = _.keyBy(survey, 'id');
+			var brushed = {
+				answer: null,
+				nodes: _.reduce(survey, (obj, d) => {
+	        obj[d.id] = d.id;
+	        return obj;
+	      }, {}),
+			};
 
-      this.setState({survey});
+      this.setState({survey, brushed});
     });
   }
+
+	updateBrush(answer, nodes) {
+		this.setState({brushed: {answer, nodes}});
+	}
 
   render() {
     var props = {
@@ -61,6 +79,7 @@ class App extends Component {
 			xAxis,
 			xScale,
 			colorScale,
+			updateBrush: this.updateBrush,
     };
 		var graphStyle = {
 			width: 2 * width,
@@ -69,11 +88,21 @@ class App extends Component {
 			border: '1px solid #ccc',
 			padding: '40px 20px',
 		};
+		var cards = _.chain(this.state.brushed.nodes)
+			.values().take(20)
+			.map(id => {
+				return (
+					<div>{this.surveyById[id].data[metadata.frustration]}</div>
+				);
+			}).value();
     return (
       <div className="App">
 				<div style={graphStyle}>
 					<Graph {...props} {...this.state} question={metadata.questions[0]} />
 					<Graph {...props} {...this.state} question={metadata.questions[1]} />
+				</div>
+				<div>
+					{cards}
 				</div>
       </div>
     );

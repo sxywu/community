@@ -15,9 +15,11 @@ class Graph extends Component {
     this.state = {hovered: {}}
     this.onTick = this.onTick.bind(this);
     this.updateHover = this.updateHover.bind(this);
+    this.updateBrush = this.updateBrush.bind(this);
   }
 
   componentWillMount() {
+    this.brush = d3.brush().on('brush', this.updateBrush);
     this.simulation = d3.forceSimulation()
     	.force('x', d3.forceX().x(d => d.focusX))
       .force('y', d3.forceY().y(d => d.frustrated ? padding : -padding))
@@ -34,28 +36,36 @@ class Graph extends Component {
       .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
     this.axis = this.svg.append('g')
       .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
+    this.brushG = this.svg.append('g')
+      .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')')
+      .call(this.brush);
 
     this.hover = d3.select(this.refs.hover)
       .style('display', 'none');
   }
 
-  componentDidUpdate() {
-    if (!this.data) {
-      var {answer, question} = this.props;
-      question = question.question;
-      this.data = _.chain(this.props.survey)
-        .filter(d => d.data[question] && d.data[question] === answer)
-        .map(d => {
-          var y = (d.frustrated ? 1 : -1) * (d.intended ? _.random(padding, 100) : _.random(150, 200));
-          return Object.assign({}, d, {y});
-        }).value();
-      this.renderCircles();
-      this.renderLegend();
-      this.renderAxis();
+  shouldComponentUpdate(nextProps) {
+    this.circles && this.circles.attr('opacity', d =>
+      nextProps.brushed.nodes[d.id] ? 1 : 0.25);
 
-      this.simulation.nodes(this.data)
-      	.alpha(0.75).restart();
-    }
+    return !this.data || nextProps.answerKey !== this.props.answerKey;
+  }
+
+  componentDidUpdate() {
+    var {answer, question} = this.props;
+    question = question.question;
+    this.data = _.chain(this.props.survey)
+      .filter(d => d.data[question] && d.data[question] === answer)
+      .map(d => {
+        var y = (d.frustrated ? 1 : -1) * (d.intended ? _.random(padding, 100) : _.random(150, 200));
+        return Object.assign({}, d, {y});
+      }).value();
+    this.renderCircles();
+    this.renderLegend();
+    this.renderAxis();
+
+    this.simulation.nodes(this.data)
+    	.alpha(0.75).restart();
   }
 
   renderCircles() {
@@ -151,10 +161,15 @@ class Graph extends Component {
     	.attr('cy', d => d.y = d.frustrated ? Math.max(padding, d.y) : Math.min(-padding, d.y));
 
     var [minY, maxY] = d3.extent(this.data, d => d.y);
-    var height = (maxY - minY) + padding;
+    var height = (maxY - minY);
     this.container.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
     this.legend.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
     this.axis.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
+
+    this.brush.extent([[-this.props.width / 2, -height / 2], [this.props.width / 2, height / 2]]);
+    this.brushG.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')')
+      .call(this.brush);
+
     this.svg.attr('height', Math.max(defaultHeight, height));
   }
 
@@ -167,6 +182,18 @@ class Graph extends Component {
       .style('top', (y + 10) + 'px')
       .style('left', (x - hoverWidth / 2) + 'px')
       .html(html);
+  }
+
+  updateBrush() {
+    var [[x1, y1], [x2, y2]] = d3.event.selection;
+    var filtered = _.chain(this.data)
+      .filter(d => x1 <= d.x && d.x <= x2 && y1 <= d.y && d.y <= y2)
+      .reduce((obj, d) => {
+        obj[d.id] = d.id;
+        return obj;
+      }, {}).value();
+
+    this.props.updateBrush(this.props.answerKey, filtered);
   }
 
   render() {

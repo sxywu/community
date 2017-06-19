@@ -23,7 +23,7 @@ class Graph extends Component {
       return (
         <div>
           <h4 style={{margin: 0, marginTop: 20}}>{value[1]}</h4>
-          <Answer {...this.props} answer={answer} />
+          <Answer {...this.props} answer={answer} answerKey={value[2]} />
         </div>
       );
     });
