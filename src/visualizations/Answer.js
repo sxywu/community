@@ -19,7 +19,7 @@ class Graph extends Component {
   }
 
   componentWillMount() {
-    this.brush = d3.brush().on('brush', this.updateBrush);
+    this.brush = d3.brush().on('end', this.updateBrush);
     this.simulation = d3.forceSimulation()
     	.force('x', d3.forceX().x(d => d.focusX))
       .force('y', d3.forceY().y(d => d.frustrated ? padding : -padding))
@@ -45,8 +45,14 @@ class Graph extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    // if being brushed, update circle opacity
     this.circles && this.circles.attr('opacity', d =>
-      nextProps.brushed.nodes[d.id] ? 1 : 0.25);
+      nextProps.brushed.nodes[d.id] ? 1 : 0.1);
+    // also if answer isn't the one being brushed, clear the brush
+    if (nextProps.brushed.answer &&
+      nextProps.brushed.answer !== nextProps.answerKey) {
+      this.brushG.call(this.brush.move, null);
+    }
 
     return !this.data || nextProps.answerKey !== this.props.answerKey;
   }
@@ -185,6 +191,9 @@ class Graph extends Component {
   }
 
   updateBrush() {
+    // if this brush is being cleared, do nothing for now
+    if (!d3.event.selection) return;
+
     var [[x1, y1], [x2, y2]] = d3.event.selection;
     var filtered = _.chain(this.data)
       .filter(d => x1 <= d.x && d.x <= x2 && y1 <= d.y && d.y <= y2)
