@@ -90,10 +90,9 @@ class App extends Component {
 		var total = this.state.brushed.nodes && _.size(this.state.brushed.nodes);
 		var q1 = metadata.questions[0];
 		var q2 = metadata.questions[1];
-		var domain = metadata.domains[0];
 		var cards = _.chain(this.state.brushed.nodes)
 			.values().take(20)
-			.sortBy(id => -this.surveyById[id].data[domain.domain])
+			.sortBy(id => -this.surveyById[id].data[metadata.domain])
 			.map((id, i) => {
 				var style = {
 					width: (2 * width - 8 * padding) / 3 - 2,
@@ -115,8 +114,8 @@ class App extends Component {
 						<strong>{q2.questionMap}: </strong>
 						{q2.answers[answerData[q2.question]][1]}
 						<br />
-						<strong>{domain.domainMap}: </strong>
-						{answerData[domain.domain]}%
+						<strong>{metadata.domainMap}: </strong>
+						{answerData[metadata.domain]}%
 						<br />
 						<strong>Frustration: </strong>
 						{answerData[metadata.frustration] || 'N/A'}
