@@ -83,25 +83,56 @@ class App extends Component {
     };
 		var graphStyle = {
 			width: 2 * width,
-			margin: '20px auto',
-			boxShadow: '0 0 5px #ccc',
-			border: '1px solid #ccc',
-			padding: '40px 20px',
+			margin: '60px auto',
 		};
+
+		var padding = 15;
+		var total = this.state.brushed.nodes && _.size(this.state.brushed.nodes);
+		var q1 = metadata.questions[0];
+		var q2 = metadata.questions[1];
+		var domain = metadata.domains[0];
 		var cards = _.chain(this.state.brushed.nodes)
 			.values().take(20)
-			.map(id => {
+			.sortBy(id => -this.surveyById[id].data[domain.domain])
+			.map((id, i) => {
+				var style = {
+					width: (2 * width - 8 * padding) / 3 - 2,
+					padding: padding,
+					marginRight: (i % 3 === 2) ? 0 : padding,
+					marginBottom: padding,
+					border: '1px solid #333',
+					display: 'inline-block',
+					verticalAlign: 'top',
+					lineHeight: 1.6,
+				};
+				var answerData = this.surveyById[id].data;
 				return (
-					<div>{this.surveyById[id].data[metadata.frustration]}</div>
+					<div style={style}>
+						<center><em>{i + 1}.</em></center><br />
+						<strong>{q1.questionMap}: </strong>
+						{q1.answers[answerData[q1.question]][1]}
+						<br />
+						<strong>{q2.questionMap}: </strong>
+						{q2.answers[answerData[q2.question]][1]}
+						<br />
+						<strong>{domain.domainMap}: </strong>
+						{answerData[domain.domain]}%
+						<br />
+						<strong>Frustration: </strong>
+						{answerData[metadata.frustration] || 'N/A'}
+						<br />
+					</div>
 				);
 			}).value();
+
     return (
       <div className="App">
 				<div style={graphStyle}>
 					<Graph {...props} {...this.state} question={metadata.questions[0]} />
 					<Graph {...props} {...this.state} question={metadata.questions[1]} />
 				</div>
-				<div>
+				<div style={{width: 2 * width, margin: 'auto'}}>
+					<center><em>Showing {cards.length} out of {total}</em></center><br />
 					{cards}
 				</div>
       </div>
