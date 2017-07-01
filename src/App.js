@@ -21,8 +21,13 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {survey: [], brushed: {}};
+    this.state = {
+			survey: [],
+			brushed: {},
+			questions: [metadata.questions[0], metadata.questions[1]]
+		};
 		this.updateBrush = this.updateBrush.bind(this);
+		this.updateQuestion = this.updateQuestion.bind(this);
   }
 
   componentWillMount() {
@@ -71,6 +76,12 @@ class App extends Component {
 		this.setState({brushed: {answer, nodes}});
 	}
 
+	updateQuestion(index, question) {
+		var questions = this.state.questions;
+		questions[index] = question;
+		this.setState({questions});
+	}
+
   render() {
     var props = {
       width,
@@ -80,6 +91,7 @@ class App extends Component {
 			xScale,
 			colorScale,
 			updateBrush: this.updateBrush,
+			updateQuestion: this.updateQuestion,
     };
 		var graphStyle = {
 			width: 2 * width,
@@ -88,8 +100,9 @@ class App extends Component {
 
 		var padding = 15;
 		var total = this.state.brushed.nodes && _.size(this.state.brushed.nodes);
-		var q1 = metadata.questions[0];
-		var q2 = metadata.questions[1];
+		var q1 = this.state.questions[0];
+		var q2 = this.state.questions[1];
+
 		var cards = _.chain(this.state.brushed.nodes)
 			.values().take(20)
 			.sortBy(id => -this.surveyById[id].data[metadata.domain])
@@ -105,14 +118,16 @@ class App extends Component {
 					lineHeight: 1.6,
 				};
 				var answerData = this.surveyById[id].data;
+				var q1Answer = q1.answers[answerData[q1.question]];
+				var q2Answer = q2.answers[answerData[q2.question]];
 				return (
 					<div style={style}>
 						<center><em>{i + 1}.</em></center><br />
 						<strong>{q1.questionMap}: </strong>
-						{q1.answers[answerData[q1.question]][1]}
+						{_.isArray(q1Answer) ? q1Answer[1] : 'N/A'}
 						<br />
 						<strong>{q2.questionMap}: </strong>
-						{q2.answers[answerData[q2.question]][1]}
+						{_.isArray(q2Answer) ? q2Answer[1] : 'N/A'}
 						<br />
 						<strong>{metadata.domainMap}: </strong>
 						{answerData[metadata.domain]}%
@@ -127,8 +142,10 @@ class App extends Component {
     return (
       <div className="App">
 				<div style={graphStyle}>
-					<Graph {...props} {...this.state} question={metadata.questions[0]} />
-					<Graph {...props} {...this.state} question={metadata.questions[1]} />
+					<Graph {...props} {...this.state}
+						index={0} question={this.state.questions[0]} />
+					<Graph {...props} {...this.state}
+						index={1} question={this.state.questions[1]} />
 				</div>
 				<div style={{width: 2 * width, margin: 'auto'}}>
 					<center><em>Showing {cards.length} out of {total}</em></center><br />

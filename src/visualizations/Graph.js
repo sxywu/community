@@ -18,7 +18,6 @@ class Graph extends Component {
       fontStyle: 'italic',
       lineHeight: 1.6,
     };
-    var {questionMap} = this.props.question;
     var answers = _.map(this.props.question.answers, (value, answer) => {
       return (
         <div>
@@ -28,9 +27,25 @@ class Graph extends Component {
       );
     });
 
+    var index = this.props.index;
+    var questions = _.chain(this.props.metadata.questions)
+      // don't want the other question that's selected
+      .filter(question => this.props.questions[index ? 0 : 1] !== question)
+      .map(question => {
+        var style = {
+          borderBottom: question === this.props.question ? '2px solid' : 'none',
+          cursor: 'pointer',
+        };
+        return (
+          <div style={style} onClick={() => this.props.updateQuestion(index, question)}>
+            {question.questionMap}
+          </div>
+        )
+      }).value();
+
     return (
       <div style={style}>
-        <h3 style={headerStyle}>{questionMap}</h3>
+        <h3 style={headerStyle}>{questions}</h3>
         {answers}
       </div>
     );
