@@ -8,7 +8,7 @@ var fontSize = 12;
 var padding = 20;
 var hoverWidth = 250;
 
-class Graph extends Component {
+class Answer extends Component {
   constructor(props) {
     super(props);
 
@@ -42,6 +42,11 @@ class Graph extends Component {
 
     this.hover = d3.select(this.refs.hover)
       .style('display', 'none');
+
+    if (this.props.survey.length) {
+      // if survey responses have loaded
+      this.renderAll();
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -58,6 +63,10 @@ class Graph extends Component {
   }
 
   componentDidUpdate() {
+    this.renderAll();
+  }
+
+  renderAll() {
     var {answer, question} = this.props;
     question = question.question;
     this.data = _.chain(this.props.survey)
@@ -66,6 +75,7 @@ class Graph extends Component {
         var y = (d.frustrated ? 1 : -1) * (d.intended ? _.random(padding, 100) : _.random(150, 200));
         return Object.assign({}, d, {y});
       }).value();
+
     this.renderCircles();
     this.renderLegend();
     this.renderAxis();
@@ -97,6 +107,7 @@ class Graph extends Component {
       .merge(this.circles)
     	.attr('fill', d => d.intended ? d.color : '#fff')
     	.attr('stroke', d => d.color)
+      .attr('opacity', d => this.props.brushed.nodes[d.id] ? 1 : 0.1)
       .on('mouseover', this.updateHover)
       .on('mouseleave', d => this.hover.style('display', 'none'));
   }
@@ -228,4 +239,4 @@ class Graph extends Component {
   }
 }
 
-export default Graph;
+export default Answer;
