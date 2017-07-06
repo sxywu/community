@@ -213,7 +213,7 @@ class Answer extends Component {
         return obj;
       }, {}).value();
 
-    this.props.updateBrush(this.props.answerKey, filtered);
+    this.props.updateBrush(this.props.answerKey, filtered, this.props.index);
   }
 
   render() {

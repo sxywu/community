@@ -10,7 +10,8 @@
     "d3": "^4.8.0",
     "lodash": "^4.17.4",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-select": "^1.0.0-rc.5"
   },
   "scripts": {
     "start": "react-scripts start",

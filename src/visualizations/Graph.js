@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import _ from 'lodash';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 import Answer from './Answer';
 
@@ -13,10 +15,7 @@ class Graph extends Component {
       verticalAlign: 'top',
     };
     var headerStyle = {
-      width: this.props.width * 0.75,
-      margin: 'auto',
-      fontStyle: 'italic',
-      lineHeight: 1.6,
+      padding: '0 40px',
     };
     var answers = _.map(this.props.question.answers, (value, answer) => {
       return (
@@ -32,20 +31,16 @@ class Graph extends Component {
       // don't want the other question that's selected
       .filter(question => this.props.questions[index ? 0 : 1] !== question)
       .map(question => {
-        var style = {
-          borderBottom: question === this.props.question ? '2px solid' : 'none',
-          cursor: 'pointer',
-        };
-        return (
-          <div style={style} onClick={() => this.props.updateQuestion(index, question)}>
-            {question.questionMap}
-          </div>
-        )
+        return {value: question.index, label: question.questionMap, index, question};
       }).value();
 
     return (
       <div style={style}>
-        <h3 style={headerStyle}>{questions}</h3>
+        <div style={headerStyle}>
+          <Select className='header' name='form-question'
+            value={this.props.question.index} options={questions}
+            clearable={false} onChange={this.props.updateQuestion} />
+        </div>
         {answers}
       </div>
     );

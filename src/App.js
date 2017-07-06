@@ -33,6 +33,7 @@ class App extends Component {
   componentWillMount() {
     var {frustration, domain, intended, intendedMap, questions} = metadata;
 		_.each(questions, (question, i) => {
+			question.index = i;
 			_.each(question.answers, (answer) => {
 				answer.push(i + ',' + answer[0]);
 			});
@@ -76,9 +77,10 @@ class App extends Component {
 		this.setState({brushed: {answer, nodes}});
 	}
 
-	updateQuestion(index, question) {
+	updateQuestion(d) {
+		console.log(d)
 		var questions = this.state.questions;
-		questions[index] = question;
+		questions[d.index] = d.question;
 		this.setState({questions});
 	}
 
