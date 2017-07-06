@@ -9,15 +9,6 @@
   },
   "questions": [
     {
-      "question": "What focus is data visualization in your work?",
-      "questionMap": "What focus is data visualization in your work?",
-      "answers": {
-        "Data visualization is the focus of my job": [0, "Primary"],
-        "Data visualization is an important secondary part of my job but not the focus": [1, "Secondary"],
-        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "One of several"]
-      }
-    },
-    {
       "question": "For your current role or the majority of your projects: were you hired to do data visualization only or is data visualization a part of your job/project description?",
       "questionMap": "Were you hired to do data visualization only?",
       "answers": {
@@ -35,6 +26,15 @@
       }
     },
     {
+      "question": "What focus is data visualization in your work?",
+      "questionMap": "What focus is data visualization in your work?",
+      "answers": {
+        "Data visualization is the focus of my job": [0, "Primary"],
+        "Data visualization is an important secondary part of my job but not the focus": [1, "Secondary"],
+        "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "One of several"]
+      }
+    },
+    {
       "question": "Is there a separate group that does data visualizations or are you embedded in another group? (data science UX UI web data engineering IT etc)",
       "questionMap": "Is there a separate group that does data visualizations or are you embedded in another group?",
       "answers": {
@@ -49,6 +49,47 @@
       "answers": {
         "Yes": [0, "Yes"],
         "No": [1, "No"]
+      }
+    },
+    {
+      "question": "What knowledge level do they have of the data you are visualizing for them?",
+      "questionMap": "What knowledge level do your consumers have of the data you are visualizing?",
+      "answers": {
+        "Expert": [0, "Expert"],
+        "Moderate;Expert": [1, "Expert to Moderate"],
+        "Moderate": [2, "Moderate"],
+        "Intro;Moderate": [3, "Moderate to Intro"],
+        "Intro": [4, "Intro"],
+        "Intro;Moderate;Expert": [5, "All"]
+      }
+    },
+    {
+      "question": "How often do they consume your data visualizations?",
+      "questionMap": "How often do they consume your data visualizations?",
+      "answers": {
+        "Hourly": [0, "Hourly"],
+        "Daily": [1, "Daily"],
+        "Weekly": [2, "Weekly"],
+        "Monthly": [3, "Monthly"],
+        "Quarterly": [4, "Quarterly"],
+        "Yearly": [5, "Yearly"]
+      }
+    },
+    {
+      "question": "Are you able to choose your own tools or are the choices made for you?",
+      "questionMap": "Are you able to choose your own tools?",
+      "answers": {
+        "I'm able to choose my own tools.": [0, "Yes"],
+        "We have a set list of tools we're expected to use for data visualization.": [1, "No"]
+      }
+    },
+    {
+      "question": "How would you describe the relationship?",
+      "questionMap": "How would you describe your relationship with your consumer?",
+      "answers": {
+        "Collaborative": [0, "Collaborative"],
+        "Consultative": [1, "Consultative"],
+        "Subordinate": [2, "Subordinate"]
       }
     }
   ]

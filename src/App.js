@@ -43,6 +43,11 @@ class App extends Component {
       var xDomain = d3.extent(survey, d => d[domain] = ++d[domain] - 1);
       experienceScale.domain(xDomain);
 
+			// // console all the answers
+			// _.each(questions, question => {
+			// 	console.log(question.question, _.countBy(survey, d => d[question.question]));
+			// });
+
       // get the data ready
       survey = _.map(survey, (d, i) => {
         var exp = experienceScale(d[domain]);
