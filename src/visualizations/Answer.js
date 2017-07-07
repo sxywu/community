@@ -50,8 +50,8 @@ class Answer extends Component {
     this.circles && this.circles.attr('opacity', d =>
       nextProps.brushed.nodes[d.id] ? 1 : 0.1);
     // also if answer isn't the one being brushed, clear the brush
-    if (nextProps.brushed.answer &&
-      nextProps.brushed.answer !== nextProps.answerKey) {
+    if (nextProps.brushed.answers.length && nextProps.brushed.answers[this.props.index] &&
+      nextProps.brushed.answers[this.props.index][0] !== nextProps.answerKey) {
       this.brushG.call(this.brush.move, null);
     }
 

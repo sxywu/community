@@ -66,24 +66,44 @@ class App extends Component {
         }
       });
 			this.surveyById = _.keyBy(survey, 'id');
+			var allNodes = _.reduce(survey, (obj, d) => {
+				obj[d.id] = d.id;
+				return obj;
+			}, {});
 			var brushed = {
-				answer: null,
-				nodes: _.reduce(survey, (obj, d) => {
-	        obj[d.id] = d.id;
-	        return obj;
-	      }, {}),
+				answers: [],
+				nodes: allNodes,
+				allNodes,
 			};
 
       this.setState({survey, brushed});
     });
   }
 
-	updateBrush(answer, nodes) {
-		this.setState({brushed: {answer, nodes}});
+	updateBrush(answer, newNodes, index) {
+		var answers = this.state.brushed.answers;
+		var allNodes = this.state.brushed.allNodes;
+
+		// get the nodes from the other question
+		var otherNodes = answers[index ? 0 : 1];
+		otherNodes = otherNodes && otherNodes[1];
+		var nodes;
+		if (!otherNodes) {
+			// if there's no nodes brushed in other question, so just keep with this one
+			nodes = newNodes;
+		} else {
+			nodes = _.reduce(newNodes, (obj, node) => {
+				// basically calculate intersection but for an object
+				if (otherNodes[node]) obj[node] = node;
+				return obj;
+			}, {});
+		}
+
+		answers[index] = [answer, newNodes];
+		this.setState({brushed: {answers, nodes, allNodes}});
 	}
 
 	updateQuestion(d) {
-		console.log(d)
 		var questions = this.state.questions;
 		questions[d.index] = d.question;
 		this.setState({questions});
@@ -111,7 +131,7 @@ class App extends Component {
 		var q2 = this.state.questions[1];
 
 		var cards = _.chain(this.state.brushed.nodes)
-			.values().take(20)
+			.values().take(18)
 			.sortBy(id => -this.surveyById[id].data[metadata.domain])
 			.map((id, i) => {
 				var style = {
