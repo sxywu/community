@@ -31,7 +31,10 @@ class Graph extends Component {
       // don't want the other question that's selected
       .filter(question => this.props.questions[index ? 0 : 1] !== question)
       .map(question => {
-        return {value: question.index, label: question.questionMap, index, question};
+        return {
+          value: question.index,
+          label: (question.index + 1) + '.  ' + question.questionMap,
+          index, question};
       }).value();
 
     return (

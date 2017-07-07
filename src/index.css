@@ -4,3 +4,12 @@ body {
   font-family: 'Libre Baskerville', serif;
   font-size: 14px;
 }
+
+.Select-menu-outer {
+  max-height: 500px;
+}
+.Select-menu {
+  max-height: 498px;
+  text-align: left;
+  line-height: 1.6;
+}
