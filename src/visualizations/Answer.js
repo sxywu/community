@@ -50,8 +50,10 @@ class Answer extends Component {
     this.circles && this.circles.attr('opacity', d =>
       nextProps.brushed.nodes[d.id] ? 1 : 0.1);
     // also if answer isn't the one being brushed, clear the brush
-    if (nextProps.brushed.answers.length && nextProps.brushed.answers[this.props.index] &&
+    if (nextProps.brushed.answers.length && !nextProps.brushed.answers[this.props.index] ||
+      nextProps.brushed.answers[this.props.index] &&
       nextProps.brushed.answers[this.props.index][0] !== nextProps.answerKey) {
+      this.programaticallyClearBrush = true;
       this.brushG.call(this.brush.move, null);
     }
 
@@ -185,16 +187,20 @@ class Answer extends Component {
   }
 
   updateBrush() {
-    // if this brush is being cleared, do nothing for now
-    if (!d3.event.selection) return;
-
-    var [[x1, y1], [x2, y2]] = d3.event.selection;
-    var filtered = _.chain(this.data)
-      .filter(d => x1 <= d.x && d.x <= x2 && y1 <= d.y && d.y <= y2)
-      .reduce((obj, d) => {
-        obj[d.id] = d.id;
-        return obj;
-      }, {}).value();
+    if (this.programaticallyClearBrush) {
+      this.programaticallyClearBrush = false;
+      return;
+    }
+    var filtered;
+    if (d3.event.selection) {
+      var [[x1, y1], [x2, y2]] = d3.event.selection;
+      filtered = _.chain(this.data)
+        .filter(d => x1 <= d.x && d.x <= x2 && y1 <= d.y && d.y <= y2)
+        .reduce((obj, d) => {
+          obj[d.id] = d.id;
+          return obj;
+        }, {}).value();
+    }
 
     this.props.updateBrush(this.props.answerKey, filtered, this.props.index);
   }

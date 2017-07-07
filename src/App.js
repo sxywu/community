@@ -88,9 +88,15 @@ class App extends Component {
 		var otherNodes = answers[index ? 0 : 1];
 		otherNodes = otherNodes && otherNodes[1];
 		var nodes;
-		if (!otherNodes) {
+		if (!otherNodes && !newNodes) {
+			// if both are cleared, show all nodes again
+			nodes = allNodes;
+		} else if (!otherNodes) {
 			// if there's no nodes brushed in other question, so just keep with this one
 			nodes = newNodes;
+		} else if (!newNodes) {
+			// if there are no new nodes, use the other nodes
+			nodes = otherNodes;
 		} else {
 			nodes = _.reduce(newNodes, (obj, node) => {
 				// basically calculate intersection but for an object
@@ -99,7 +105,7 @@ class App extends Component {
 			}, {});
 		}
 
-		answers[index] = [answer, newNodes];
+		answers[index] = newNodes ? [answer, newNodes] : null;
 		this.setState({brushed: {answers, nodes, allNodes}});
 	}
 
