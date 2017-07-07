@@ -72,7 +72,7 @@ class Answer extends Component {
     this.data = _.chain(this.props.survey)
       .filter(d => d.data[question] && d.data[question] === answer)
       .map(d => {
-        var y = (d.frustrated ? 1 : -1) * (d.intended ? _.random(padding, 100) : _.random(150, 200));
+        var y = (d.frustrated ? 1 : -1) * (d.intended ? _.random(0, padding) : _.random(2 * padding, 3 * padding));
         return Object.assign({}, d, {y});
       }).value();
 
