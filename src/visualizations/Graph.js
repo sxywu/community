@@ -17,7 +17,8 @@ class Graph extends Component {
       padding: '0 40px',
     };
     var answers = _.map(this.props.question.answers, (value, answer) => {
-      return (<Answer {...this.props} answer={answer} answerKey={value[2]} answerVal={value[1]} />);
+      return (<Answer key={value[2]} {...this.props}
+        answer={answer} answerKey={value[2]} answerVal={value[1]} />);
     });
 
     var index = this.props.index;

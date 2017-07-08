@@ -183,7 +183,7 @@ class App extends Component {
 				var q1Answer = q1.answers[answerData[q1.question]];
 				var q2Answer = q2.answers[answerData[q2.question]];
 				return (
-					<div style={style}>
+					<div key={i} style={style}>
 						<h4 style={{borderBottom: '1px solid'}}>
 							<em>{i + 1}.</em>
 						</h4>
