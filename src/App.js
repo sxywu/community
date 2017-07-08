@@ -150,6 +150,15 @@ class App extends Component {
 			width: 2 * width,
 			margin: '0 auto 60px',
 		};
+		var cardsStyle = {
+			width: 2 * width,
+			margin: '0 auto 120px',
+		};
+		var footerStyle = {
+			width: 2 * width,
+			margin: '0 auto 20px',
+			textAlign: 'center',
+		}
 
 		var padding = 15;
 		var total = this.state.brushed.nodes && _.size(this.state.brushed.nodes);
@@ -222,12 +231,19 @@ class App extends Component {
 						index={1} question={this.state.questions[1]} />
 				</div>
 
-				<div style={{width: 2 * width, margin: 'auto'}}>
+				<div style={cardsStyle}>
 					<div style={{textAlign: 'center'}}>
 						<h2>↑<br />Brush to filter graph</h2>
 						<em>Showing {cards.length} out of {total}</em>
 					</div>
 					{cards}
+				</div>
+
+        <div style={footerStyle}>
+					<sup>
+made with 💖 for <a href='http://www.datasketch.es/april/' target='_new'>April</a>: <a href='http://www.datasketch.es/' target='_new'>datasketch|es</a><br />
+a monthly collaboration between <a href='https://twitter.com/nadiehbremer' target='_new'>Nadieh Bremer</a> and <a href='https://twitter.com/sxywu' target='_new'>Shirley Wu</a>
+					</sup>
 				</div>
       </div>
     );

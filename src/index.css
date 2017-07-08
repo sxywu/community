@@ -9,6 +9,18 @@ h1, h2, h3, h4, strong {
   font-family: 'Open Sans', sans-serif;
 }
 
+a,  a:visited,  a:link,  .underline {
+  text-decoration: none;
+  border-bottom: 1px solid;
+  pointer-events: auto;
+  color: inherit;
+  cursor: pointer;
+}
+
+ a:hover,  .underline:hover {
+  border-bottom: 1px dashed;
+}
+
 .Select-menu-outer {
   max-height: 500px;
 }
