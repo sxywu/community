@@ -34,11 +34,11 @@ class Graph extends Component {
 
     return (
       <div style={style}>
-        <div style={headerStyle}>
+        <h4 style={headerStyle}>
           <Select className='header' name='form-question'
             value={this.props.question.index} options={questions}
             clearable={false} onChange={this.props.updateQuestion} />
-        </div>
+        </h4>
         {answers}
       </div>
     );
