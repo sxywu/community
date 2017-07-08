@@ -151,7 +151,7 @@ class App extends Component {
 		var q2 = this.state.questions[1];
 
 		var cards = _.chain(this.state.brushed.nodes)
-			.values().take(18)
+			.values().take(12)
 			.sortBy(id => -this.surveyById[id].data[metadata.domain])
 			.map((id, i) => {
 				var style = {
@@ -159,8 +159,8 @@ class App extends Component {
 					padding: padding,
 					marginRight: (i % 3 === 2) ? 0 : padding,
 					marginBottom: padding,
-					border: '1px solid #333',
 					display: 'inline-block',
+					textAlign: 'justify',
 					verticalAlign: 'top',
 					lineHeight: 1.6,
 				};
@@ -169,17 +169,19 @@ class App extends Component {
 				var q2Answer = q2.answers[answerData[q2.question]];
 				return (
 					<div style={style}>
-						<center><em>{i + 1}.</em></center><br />
-						<strong>{q1.questionMap}: </strong>
+						<h4 style={{borderBottom: '1px solid'}}>
+							<em>{i + 1}.</em>
+						</h4>
+						<strong>{q1.questionMap} </strong>
 						{_.isArray(q1Answer) ? q1Answer[1] : 'N/A'}
 						<br />
-						<strong>{q2.questionMap}: </strong>
+						<strong>{q2.questionMap} </strong>
 						{_.isArray(q2Answer) ? q2Answer[1] : 'N/A'}
 						<br />
-						<strong>{metadata.domainMap}: </strong>
+						<strong>{metadata.domainMap} </strong>
 						{answerData[metadata.domain]}%
 						<br />
-						<strong>Frustration: </strong>
+						<strong>Biggest frustration(s) </strong>
 						{answerData[metadata.frustration] || 'N/A'}
 						<br />
 					</div>
@@ -195,7 +197,10 @@ class App extends Component {
 						index={1} question={this.state.questions[1]} />
 				</div>
 				<div style={{width: 2 * width, margin: 'auto'}}>
-					<center><em>Showing {cards.length} out of {total}</em></center><br />
+					<center>
+						<h2>↑<br />Brush to filter graph</h2>
+						<em>Showing {cards.length} out of {total}</em>
+					</center>
 					{cards}
 				</div>
       </div>
