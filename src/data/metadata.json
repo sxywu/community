@@ -17,21 +17,21 @@
       }
     },
     {
-      "question": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
-      "questionMap": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
-      "answers": {
-        "Data Visualization Role has higher compensation": [0, "Higher"],
-        "Data Visualization Role has same compensation": [1, "Same"],
-        "Data Visualization Role has Lower compensation": [2, "Lower"]
-      }
-    },
-    {
       "question": "What focus is data visualization in your work?",
       "questionMap": "What focus is data visualization in your work?",
       "answers": {
         "Data visualization is the focus of my job": [0, "Primary"],
         "Data visualization is an important secondary part of my job but not the focus": [1, "Secondary"],
         "Data visualization is one of several other things I do in my job but not a primary or secondary part of my role": [2, "One of several"]
+      }
+    },
+    {
+      "question": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
+      "questionMap": "Is your total compensation in-line with Software Engineers and UX/UI/Designer roles at your level?",
+      "answers": {
+        "Data Visualization Role has higher compensation": [0, "Higher"],
+        "Data Visualization Role has same compensation": [1, "Same"],
+        "Data Visualization Role has Lower compensation": [2, "Lower"]
       }
     },
     {
@@ -73,14 +73,6 @@
         "Monthly": [3, "Monthly"],
         "Quarterly": [4, "Quarterly"],
         "Yearly": [5, "Yearly"]
-      }
-    },
-    {
-      "question": "Are you able to choose your own tools or are the choices made for you?",
-      "questionMap": "Are you able to choose your own tools?",
-      "answers": {
-        "I'm able to choose my own tools.": [0, "Yes"],
-        "We have a set list of tools we're expected to use for data visualization.": [1, "No"]
       }
     },
     {
