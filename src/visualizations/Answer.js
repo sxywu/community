@@ -28,6 +28,7 @@ class Answer extends Component {
   }
 
   componentDidMount() {
+    this.header = d3.select(this.refs.header);
     this.svg = d3.select(this.refs.svg).attr('height', defaultHeight);
     this.container = this.svg.append('g')
       .attr('transform', 'translate(' + [this.props.width / 2, 0] + ')');
@@ -46,6 +47,7 @@ class Answer extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    this.renderHeader(nextProps.brushed);
     // if being brushed, update circle opacity
     this.circles && this.circles.attr('opacity', d =>
       nextProps.brushed.nodes[d.id] ? 1 : 0.1);
@@ -65,7 +67,7 @@ class Answer extends Component {
   }
 
   renderAll() {
-    var {answer, question} = this.props;
+    var {answer, question, brushed} = this.props;
     question = question.question;
     this.data = _.chain(this.props.survey)
       .filter(d => d.data[question] && d.data[question] === answer)
@@ -74,12 +76,31 @@ class Answer extends Component {
         return Object.assign({}, d, {y});
       }).value();
 
+    this.renderHeader(brushed);
     this.renderCircles();
     this.renderLegend();
     this.renderAxis();
 
     this.simulation.nodes(this.data)
     	.alpha(0.75).restart();
+  }
+
+  renderHeader(brushed) {
+    var happy = 0;
+    var frustrated = 0;
+    _.each(this.data, d => {
+      // if the node isn't brushed, skip to next one
+      if (!brushed.nodes[d.id]) return;
+      if (d.frustrated) {
+        frustrated += 1;
+      } else {
+        happy += 1;
+      }
+    });
+
+    var html = '<h4 style="margin:0;margin-bottom:5px">' + this.props.answerVal + '</h4>';
+    html += '<sup>(' + happy + ' : ' + frustrated + ')</sup>';
+    this.header.html(html);
   }
 
   renderCircles() {
@@ -207,7 +228,10 @@ class Answer extends Component {
 
   render() {
     return (
-      <svg ref='svg' width={this.props.width} style={{overflow: 'visible'}} />
+      <div>
+        <div ref='header' style={{marginTop: 20}} />
+        <svg ref='svg' width={this.props.width} style={{overflow: 'visible'}} />
+      </div>
     );
   }
 }
