@@ -6,7 +6,6 @@ import chroma from 'chroma-js';
 import Intro from './Intro';
 import Graph from './visualizations/Graph';
 import metadata from './data/metadata.json';
-import positions from './data/positions.json';
 import legendImage from './images/legend.png';
 
 var width = 600;
@@ -212,7 +211,7 @@ class App extends Component {
 				<div style={legendStyle}>
 					<h2 style={{textAlign: 'center'}}>How to read graph<br />↓</h2>
 					<div style={{position: 'relative'}}>
-						<img src={legendImage} />
+						<img src={legendImage} alt='How to read graph' />
 						<sup style={{position: 'absolute', width: '100%', left: 360, top: 4}}>
 							← (no frustrations + with frustrations = total)
 						</sup>
@@ -245,7 +244,7 @@ class App extends Component {
 
         <div style={footerStyle}>
 					<sup>
-made with 💖 for <a href='http://www.datasketch.es/april/' target='_new'>April</a>: <a href='http://www.datasketch.es/' target='_new'>datasketch|es</a><br />
+made with <span role="img" aria-label="heart">💖</span> for <a href='http://www.datasketch.es/april/' target='_new'>April</a>: <a href='http://www.datasketch.es/' target='_new'>datasketch|es</a><br />
 a monthly collaboration between <a href='https://twitter.com/nadiehbremer' target='_new'>Nadieh Bremer</a> and <a href='https://twitter.com/sxywu' target='_new'>Shirley Wu</a>
 					</sup>
 				</div>

@@ -4,9 +4,7 @@ import _ from 'lodash';
 
 var defaultHeight = 50;
 var radius = 3;
-var fontSize = 12;
 var padding = 20;
-var hoverWidth = 250;
 
 class Answer extends Component {
   constructor(props) {
@@ -52,9 +50,10 @@ class Answer extends Component {
     this.circles && this.circles.attr('opacity', d =>
       nextProps.brushed.nodes[d.id] ? 1 : 0.1);
     // also if answer isn't the one being brushed, clear the brush
-    if (nextProps.brushed.answers.length && !nextProps.brushed.answers[this.props.index] ||
-      nextProps.brushed.answers[this.props.index] &&
-      nextProps.brushed.answers[this.props.index][0] !== nextProps.answerKey) {
+    if (nextProps.brushed.answers.length &&
+      (!nextProps.brushed.answers[this.props.index] ||
+        (nextProps.brushed.answers[this.props.index] &&
+        nextProps.brushed.answers[this.props.index][0] !== nextProps.answerKey))) {
       this.programaticallyClearBrush = true;
       this.brushG.call(this.brush.move, null);
     }
@@ -142,7 +141,6 @@ class Answer extends Component {
         var q3 = d3.quantile(xArray, 0.75);
         var q4 = d3.quantile(xArray, 1);
         var q1Color = this.props.colorScale(this.props.xScale.invert(q1));
-        var q2Color = this.props.colorScale(this.props.xScale.invert(q2));
         var q3Color = this.props.colorScale(this.props.xScale.invert(q3));
 
         return {
