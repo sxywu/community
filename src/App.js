@@ -6,6 +6,7 @@ import chroma from 'chroma-js';
 import Graph from './visualizations/Graph';
 import metadata from './data/metadata.json';
 import positions from './data/positions.json';
+import legendImage from './images/legend.png';
 
 var width = 600;
 var centerSize = 100;
@@ -140,9 +141,14 @@ class App extends Component {
 			updateBrush: this.updateBrush,
 			updateQuestion: this.updateQuestion,
     };
+
+		var legendStyle = {
+			width: 700,
+			margin: '0 auto 20px',
+		};
 		var graphStyle = {
 			width: 2 * width,
-			margin: '60px auto',
+			margin: '0 auto 60px',
 		};
 
 		var padding = 15;
@@ -190,17 +196,37 @@ class App extends Component {
 
     return (
       <div className="App">
+				<div style={legendStyle}>
+					<h2 style={{textAlign: 'center'}}>How to read graph<br />↓</h2>
+					<div style={{position: 'relative'}}>
+						<img src={legendImage} />
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 4}}>
+							← (no frustrations + with frustrations = total)
+						</sup>
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 36}}>
+							← responded with <em>no</em> frustrations
+						</sup>
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 53}}>
+							← % of day respondent spends on data visualization
+						</sup>
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 70}}>
+							← responded <em>with</em> frustrations
+						</sup>
+					</div>
+				</div>
+
 				<div style={graphStyle}>
 					<Graph {...props} {...this.state}
 						index={0} question={this.state.questions[0]} />
 					<Graph {...props} {...this.state}
 						index={1} question={this.state.questions[1]} />
 				</div>
+
 				<div style={{width: 2 * width, margin: 'auto'}}>
-					<center>
+					<div style={{textAlign: 'center'}}>
 						<h2>↑<br />Brush to filter graph</h2>
 						<em>Showing {cards.length} out of {total}</em>
-					</center>
+					</div>
 					{cards}
 				</div>
       </div>
