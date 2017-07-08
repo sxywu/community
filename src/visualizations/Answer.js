@@ -195,13 +195,15 @@ class Answer extends Component {
     	.attr('cy', d => d.y = d.frustrated ? Math.max(padding, d.y) : Math.min(-padding, d.y));
 
     var [minY, maxY] = d3.extent(this.data, d => d.y);
-    var height = (maxY - minY);
-    this.container.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
-    this.legend.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
-    this.axis.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')');
+    var height = (maxY - minY) + padding;
+    var middle = -minY + padding / 2;
+    this.container.attr('transform', 'translate(' + [this.props.width / 2, middle] + ')');
+    this.legend.attr('transform', 'translate(' + [this.props.width / 2, middle] + ')');
+    this.axis.attr('transform', 'translate(' + [this.props.width / 2, middle] + ')');
 
-    this.brush.extent([[-this.props.width / 2, -height / 2], [this.props.width / 2, height / 2]]);
-    this.brushG.attr('transform', 'translate(' + [this.props.width / 2, height / 2] + ')')
+    this.brush.extent([[-this.props.width / 2, minY - padding / 2],
+      [this.props.width / 2, maxY + padding / 2]]);
+    this.brushG.attr('transform', 'translate(' + [this.props.width / 2, middle] + ')')
       .call(this.brush);
 
     this.svg.attr('height', Math.max(defaultHeight, height));
