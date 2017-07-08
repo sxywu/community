@@ -158,9 +158,8 @@ class App extends Component {
 					width: (2 * width - 8 * padding) / 3 - 2,
 					padding: padding,
 					marginRight: (i % 3 === 2) ? 0 : padding,
-					marginBottom: padding,
+					// marginBottom: padding,
 					display: 'inline-block',
-					textAlign: 'justify',
 					verticalAlign: 'top',
 					lineHeight: 1.6,
 				};
@@ -172,18 +171,19 @@ class App extends Component {
 						<h4 style={{borderBottom: '1px solid'}}>
 							<em>{i + 1}.</em>
 						</h4>
-						<strong>{q1.questionMap} </strong>
+
+						<strong>{q1.questionMap} </strong><br />
 						{_.isArray(q1Answer) ? q1Answer[1] : 'N/A'}
 						<br />
-						<strong>{q2.questionMap} </strong>
+						<strong>{q2.questionMap} </strong><br />
 						{_.isArray(q2Answer) ? q2Answer[1] : 'N/A'}
 						<br />
-						<strong>{metadata.domainMap} </strong>
+						<strong>{metadata.domainMap} </strong><br />
 						{answerData[metadata.domain]}%
-						<br />
-						<strong>Biggest frustration(s) </strong>
+
+						<br /><br />
+						<strong>Biggest frustration(s) </strong><br />
 						{answerData[metadata.frustration] || 'N/A'}
-						<br />
 					</div>
 				);
 			}).value();
