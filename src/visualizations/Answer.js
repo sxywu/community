@@ -99,7 +99,7 @@ class Answer extends Component {
     });
 
     var html = '<h4 style="margin:0;margin-bottom:5px">' + this.props.answerVal + '</h4>';
-    html += '<sup>(' + happy + ' : ' + frustrated + ')</sup>';
+    html += '<sup>(' + happy + ' + ' + frustrated + ' = ' + (happy + frustrated) + ')</sup>';
     this.header.html(html);
   }
 
