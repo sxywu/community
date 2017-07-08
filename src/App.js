@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import _ from 'lodash';
 import chroma from 'chroma-js';
 
+import Intro from './Intro';
 import Graph from './visualizations/Graph';
 import metadata from './data/metadata.json';
 import positions from './data/positions.json';
@@ -58,6 +59,7 @@ class App extends Component {
 
         return {
           frustrated,
+					frustration: d[frustration],
           intended: intend,
           focusX,
           x: focusX,
@@ -205,6 +207,8 @@ class App extends Component {
 
     return (
       <div className="App">
+				<Intro {...this.state} />
+
 				<div style={legendStyle}>
 					<h2 style={{textAlign: 'center'}}>How to read graph<br />↓</h2>
 					<div style={{position: 'relative'}}>
