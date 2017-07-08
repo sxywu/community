@@ -112,7 +112,21 @@ class App extends Component {
 	updateQuestion(d) {
 		var questions = this.state.questions;
 		questions[d.index] = d.question;
-		this.setState({questions});
+
+		// reset the brush for that question
+		var answers = this.state.brushed.answers;
+		var allNodes = this.state.brushed.allNodes;
+		var otherNodes = answers[d.index ? 0 : 1];
+		otherNodes = otherNodes && otherNodes[1];
+		var nodes;
+		if (!otherNodes) {
+			nodes = allNodes;
+		} else {
+			nodes = otherNodes;
+		}
+		answers[d.index] = null;
+
+		this.setState({questions, brushed: {answers, nodes, allNodes}});
 	}
 
   render() {
