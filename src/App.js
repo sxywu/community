@@ -209,7 +209,7 @@ class App extends Component {
 				<Intro {...this.state} />
 
 				<div style={legendStyle}>
-					<h2 style={{textAlign: 'center'}}>How to read graph<br />↓</h2>
+					<h2 style={{textAlign: 'center'}}>How to read visualization<br />↓</h2>
 					<div style={{position: 'relative'}}>
 						<img src={legendImage} alt='How to read graph' />
 						<sup style={{position: 'absolute', width: '100%', left: 360, top: 4}}>
@@ -236,7 +236,7 @@ class App extends Component {
 
 				<div style={cardsStyle}>
 					<div style={{textAlign: 'center'}}>
-						<h2>↑<br />Brush to filter graph</h2>
+						<h2>↑<br />Brush one or both questions to filter</h2>
 						<em>Showing {cards.length} out of {total}</em>
 					</div>
 					{cards}
