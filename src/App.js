@@ -7,6 +7,8 @@ import Intro from './Intro';
 import Graph from './visualizations/Graph';
 import metadata from './data/metadata.json';
 import legendImage from './images/legend.png';
+import boxplotImage from './images/boxplot.png';
+import dotsImage from './images/dots.png';
 
 var width = 600;
 var centerSize = 100;
@@ -210,6 +212,33 @@ class App extends Component {
 
 				<div style={legendStyle}>
 					<h2 style={{textAlign: 'center'}}>How to read visualization<br />↓</h2>
+
+					<div style={{position: 'relative', width: 18, margin: 'auto'}}>
+						<img src={dotsImage} alt='How to read graph' />
+						<sup style={{position: 'absolute', width: 350, left: 24, top: 0}}>
+							← set out to work in data visualization
+						</sup>
+						<sup style={{position: 'absolute', width: 350, left: 24, top: 18}}>
+							← did not set out to work in data visualization
+						</sup>
+					</div>
+
+					<div style={{position: 'relative', width: 350, margin: 'auto'}}>
+						<img src={boxplotImage} alt='How to read graph' />
+						<sup style={{position: 'absolute', textAlign: 'center', left: 140, top: 20}}>
+							↑<br />
+							q1
+						</sup>
+						<sup style={{position: 'absolute', textAlign: 'center', left: 254, top: 20}}>
+							↑<br />
+							median
+						</sup>
+						<sup style={{position: 'absolute', textAlign: 'center', left: 320, top: 20}}>
+							↑<br />
+							q3
+						</sup>
+					</div>
+
 					<div style={{position: 'relative'}}>
 						<img src={legendImage} alt='How to read graph' />
 						<sup style={{position: 'absolute', width: '100%', left: 360, top: 16}}>
