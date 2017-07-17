@@ -212,16 +212,13 @@ class App extends Component {
 					<h2 style={{textAlign: 'center'}}>How to read visualization<br />↓</h2>
 					<div style={{position: 'relative'}}>
 						<img src={legendImage} alt='How to read graph' />
-						<sup style={{position: 'absolute', width: '100%', left: 360, top: 4}}>
-							← (no frustrations + with frustrations = total)
-						</sup>
-						<sup style={{position: 'absolute', width: '100%', left: 360, top: 36}}>
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 16}}>
 							← responded with <em>no</em> frustrations
 						</sup>
-						<sup style={{position: 'absolute', width: '100%', left: 360, top: 53}}>
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 33}}>
 							← % of day respondent spends on data visualization
 						</sup>
-						<sup style={{position: 'absolute', width: '100%', left: 360, top: 70}}>
+						<sup style={{position: 'absolute', width: '100%', left: 360, top: 50}}>
 							← responded <em>with</em> frustrations
 						</sup>
 					</div>
