@@ -85,20 +85,12 @@ class Answer extends Component {
   }
 
   renderHeader(brushed) {
-    var happy = 0;
-    var frustrated = 0;
-    _.each(this.data, d => {
-      // if the node isn't brushed, skip to next one
-      if (!brushed.nodes[d.id]) return;
-      if (d.frustrated) {
-        frustrated += 1;
-      } else {
-        happy += 1;
-      }
-    });
+    var highlighted = _.filter(this.data, d => brushed.nodes[d.id]).length;
+    var total = this.data && this.data.length;
 
     var html = '<h4 style="margin:0;margin-bottom:5px">' + this.props.answerVal + '</h4>';
-    html += '<sup>(' + happy + ' + ' + frustrated + ' = ' + (happy + frustrated) + ')</sup>';
+    html += '<sup>' + highlighted + ' / ' + total;
+    html += ' (' + d3.format('.0%')(highlighted / total) + ')</sup>';
     this.header.html(html);
   }
 
