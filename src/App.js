@@ -244,7 +244,8 @@ class App extends Component {
 
         <div style={footerStyle}>
 					<sup>
-made with <span role="img" aria-label="heart">💖</span> for <a href='http://www.datasketch.es/april/' target='_new'>April</a>: <a href='http://www.datasketch.es/' target='_new'>datasketch|es</a><br />
+Catmule Caps by <a href='https://twitter.com/catmule' target='_new'>Catherine Madden</a><br />
+visualization made with <span role="img" aria-label="heart">💖</span> for <a href='http://www.datasketch.es/april/' target='_new'>April</a>: <a href='http://www.datasketch.es/' target='_new'>datasketch|es</a><br />
 a monthly collaboration between <a href='https://twitter.com/nadiehbremer' target='_new'>Nadieh Bremer</a> and <a href='https://twitter.com/sxywu' target='_new'>Shirley Wu</a>
 					</sup>
 				</div>

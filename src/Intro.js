@@ -51,7 +51,7 @@ class Intro extends Component {
         <span style={{textTransform: 'uppercase'}}>
           What is your biggest frustration doing data visualization?
         </span>
-        <h1 ref='header' style={{marginTop: 5}} />
+        <h1 ref='header' style={{fontSize: '2.4em', marginTop: 5, fontFamily: 'CatMule Caps'}} />
         <sup>
           BY <a href='http://twitter.com/sxywu' target='_new'>SHIRLEY WU</a>
         </sup>
