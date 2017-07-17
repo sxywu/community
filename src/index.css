@@ -1,3 +1,23 @@
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("./font/LibreBaskerville-Regular.ttf");
+}
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("./font/LibreBaskerville-Bold.ttf");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("./font/LibreBaskerville-Italic.ttf");
+    font-style: italic;
+}
+
+@font-face {
+  font-family: "CatMule Caps";
+  src: url("./font/CatMule-Caps.otf");
+}
+
 body {
   margin: 0;
   padding: 0;
