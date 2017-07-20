@@ -62,8 +62,10 @@ Earlier this year, my friend <a href='http://twitter.com/Elijah_Meeks'>Elijah</a
         </p>
 
         <p>
-Since none of the <a href='https://github.com/emeeks/data_visualization_survey/blob/master/data/questions.txt' target='_new'>survey questions</a> could actually measure whether people are leaving the field, I focused instead on their frustrations.  I wanted to know whether more or less people had frustrations, and how that number correlated with other aspects of their data visualization jobs: if they were hired to do data visualization, were they more likely to have frustrations?  What about if they were paid more or less than their UI and design counterparts, or if they worked collaboratively or consultatively with their consumer?  By looking at the frustrations that come from specific parts of their jobs, I'm hoping to identify the areas that we as a community can work to better.
+Since none of the <a href='https://github.com/emeeks/data_visualization_survey/blob/master/data/questions.txt' target='_new'>survey questions</a> could actually measure whether people are leaving the field, I focused instead on their frustrations.  I wanted to know whether more or less people had frustrations, and how that number correlated with other aspects of their data visualization jobs: if they were hired to do data visualization, were they more likely to have frustrations?  What about if they were paid more or less than their UI and design counterparts, or if they worked collaboratively or subordinately with their consumer?  By looking at the frustrations that come from specific parts of their jobs, I'm hoping to identify the areas that we as a community can work to better.
         </p>
+
+
       </div>
     );
   }
