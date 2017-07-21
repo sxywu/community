@@ -1,7 +1,11 @@
 {
-  "main.css": "static/css/main.a754e7d6.css",
-  "main.css.map": "static/css/main.a754e7d6.css.map",
-  "main.js": "static/js/main.0623fcc6.js",
-  "main.js.map": "static/js/main.0623fcc6.js.map",
-  "static/media/legend.png": "static/media/legend.75df37aa.png"
+  "main.css": "static/css/main.14d55042.css",
+  "main.css.map": "static/css/main.14d55042.css.map",
+  "main.js": "static/js/main.7a60dce3.js",
+  "main.js.map": "static/js/main.7a60dce3.js.map",
+  "static/media/CatMule-Caps.otf": "static/media/CatMule-Caps.947af042.otf",
+  "static/media/LibreBaskerville-Bold.ttf": "static/media/LibreBaskerville-Bold.e6d1a273.ttf",
+  "static/media/LibreBaskerville-Italic.ttf": "static/media/LibreBaskerville-Italic.d32e21a1.ttf",
+  "static/media/LibreBaskerville-Regular.ttf": "static/media/LibreBaskerville-Regular.27b9efe7.ttf",
+  "static/media/legend.png": "static/media/legend.3f030ce3.png"
 }
