@@ -28,11 +28,15 @@ class Cards extends Component {
       index: 0,
 		};
 
-    this.clickBefore = this.clickBefore.bind(this);
+    this.clickPrev = this.clickPrev.bind(this);
     this.clickNext = this.clickNext.bind(this);
   }
 
-  clickBefore() {
+  componentWillReceiveProps() {
+    this.setState({index: 0});
+  }
+
+  clickPrev() {
     this.setState({index: this.state.index - 1});
   }
 
@@ -54,7 +58,7 @@ class Cards extends Component {
 
     var perPage = 12;
     var start = this.state.index * perPage;
-    var end = Math.max(start + perPage);
+    var end = Math.min(start + perPage, total);
 		var cards = _.chain(this.props.brushed.nodes)
 			.values().slice(start, end)
 			.sortBy(id => -surveyById[id].data[metadata.domain])
@@ -93,14 +97,21 @@ class Cards extends Component {
 				);
 			}).value();
 
+    var goPrev = start > 0;
+    var goNext = end < total;
+    var prevStyle = {cursor: goPrev ? 'pointer' : 'default',
+      opacity: goPrev ? 1 : 0.25};
+    var nextStyle = {cursor: goNext ? 'pointer' : 'default',
+      opacity: goNext ? 1 : 0.25};
+
     return (
       <div className="Cards" style={cardsStyle}>
 				<div style={{textAlign: 'center'}}>
 					<h2>Brush one or both questions to filter</h2>
           <p>
-  					<span onClick={this.clickBefore}>←</span>
+  					<span style={prevStyle} onClick={goPrev && this.clickPrev}>←</span>
             <em> {start + 1} - {end} </em>
-            <span onClick={this.clickNext}>→</span>
+            <span style={nextStyle} onClick={goNext && this.clickNext}>→</span>
           </p>
           <em>out of {total}</em>
 				</div>
