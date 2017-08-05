@@ -24,8 +24,20 @@ class Cards extends Component {
 
   constructor(props) {
     super(props);
-    this.props = {
+    this.state = {
+      index: 0,
 		};
+
+    this.clickBefore = this.clickBefore.bind(this);
+    this.clickNext = this.clickNext.bind(this);
+  }
+
+  clickBefore() {
+    this.setState({index: this.state.index - 1});
+  }
+
+  clickNext() {
+    this.setState({index: this.state.index + 1});
   }
 
   render() {
@@ -40,8 +52,11 @@ class Cards extends Component {
 		var q2 = this.props.questions[1];
     var surveyById = _.keyBy(this.props.survey, 'id');
 
+    var perPage = 12;
+    var start = this.state.index * perPage;
+    var end = Math.max(start + perPage);
 		var cards = _.chain(this.props.brushed.nodes)
-			.values().take(12)
+			.values().slice(start, end)
 			.sortBy(id => -surveyById[id].data[metadata.domain])
 			.map((id, i) => {
 				var style = {
@@ -82,7 +97,12 @@ class Cards extends Component {
       <div className="Cards" style={cardsStyle}>
 				<div style={{textAlign: 'center'}}>
 					<h2>Brush one or both questions to filter</h2>
-					<em>Showing {cards.length} out of {total}</em>
+          <p>
+  					<span onClick={this.clickBefore}>←</span>
+            <em> {start + 1} - {end} </em>
+            <span onClick={this.clickNext}>→</span>
+          </p>
+          <em>out of {total}</em>
 				</div>
 				{cards}
       </div>
