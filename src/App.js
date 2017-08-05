@@ -5,6 +5,7 @@ import chroma from 'chroma-js';
 
 import Intro from './Intro';
 import Graph from './visualizations/Graph';
+import Cards from './Cards';
 import metadata from './data/metadata.json';
 import legendImage from './images/legend.png';
 import boxplotImage from './images/boxplot.png';
@@ -69,7 +70,6 @@ class App extends Component {
           id: i,
         }
       });
-			this.surveyById = _.keyBy(survey, 'id');
 			var allNodes = _.reduce(survey, (obj, d) => {
 				obj[d.id] = d.id;
 				return obj;
@@ -153,65 +153,21 @@ class App extends Component {
 			width: 2 * width,
 			margin: '0 auto 60px',
 		};
-		var cardsStyle = {
-			width: 2 * width,
-			margin: '0 auto 120px',
-		};
 		var footerStyle = {
 			width: 2 * width,
 			margin: '0 auto 20px',
 			textAlign: 'center',
 		}
 
-		var padding = 15;
-		var total = this.state.brushed.nodes && _.size(this.state.brushed.nodes);
 		var q1 = this.state.questions[0];
 		var q2 = this.state.questions[1];
-
-		var cards = _.chain(this.state.brushed.nodes)
-			.values().take(12)
-			.sortBy(id => -this.surveyById[id].data[metadata.domain])
-			.map((id, i) => {
-				var style = {
-					width: (2 * width - 8 * padding) / 3 - 2,
-					padding: padding,
-					marginRight: (i % 3 === 2) ? 0 : padding,
-					// marginBottom: padding,
-					display: 'inline-block',
-					verticalAlign: 'top',
-					lineHeight: 1.6,
-				};
-				var answerData = this.surveyById[id].data;
-				var q1Answer = q1.answers[answerData[q1.question]];
-				var q2Answer = q2.answers[answerData[q2.question]];
-				return (
-					<div key={i} style={style}>
-						<h4 style={{borderBottom: '1px solid'}}>
-							<em>{i + 1}.</em>
-						</h4>
-
-						<strong>{q1.questionMap} </strong><br />
-						{_.isArray(q1Answer) ? q1Answer[1] : 'N/A'}
-						<br />
-						<strong>{q2.questionMap} </strong><br />
-						{_.isArray(q2Answer) ? q2Answer[1] : 'N/A'}
-						<br />
-						<strong>{metadata.domainMap} </strong><br />
-						{answerData[metadata.domain]}%
-
-						<br /><br />
-						<strong>Biggest frustration(s) </strong><br />
-						{answerData[metadata.frustration] || 'N/A'}
-					</div>
-				);
-			}).value();
 
     return (
       <div className="App">
 				<Intro {...this.state} />
 
 				<div style={legendStyle}>
-					<h2 style={{textAlign: 'center'}}>How to read visualization<br />↓</h2>
+					<h2 style={{textAlign: 'center'}}>How to read the visualization</h2>
 
 					<div style={{position: 'relative', width: 18, margin: 'auto'}}>
 						<img src={dotsImage} alt='How to read graph' />
@@ -260,13 +216,7 @@ class App extends Component {
 						index={1} question={this.state.questions[1]} />
 				</div>
 
-				<div style={cardsStyle}>
-					<div style={{textAlign: 'center'}}>
-						<h2>↑<br />Brush one or both questions to filter</h2>
-						<em>Showing {cards.length} out of {total}</em>
-					</div>
-					{cards}
-				</div>
+				<Cards {...this.state} {...props} />
 
         <div style={footerStyle}>
 					<sup>
